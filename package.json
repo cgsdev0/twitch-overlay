@@ -7,7 +7,7 @@
     "start": "vite --host",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "gen-types": "node transform_schema.js && quicktype -o types.ts --lang typescript --src-lang schema --no-runtime-typecheck --just-types --prefer-unions --acronym-style camel './schema2.json#/definitions/' && ./gen-typemap"
+    "gen-types": "node types/transform_schema.js && quicktype -o src/tau_types.ts --lang typescript --src-lang schema --no-runtime-typecheck --just-types --prefer-unions --acronym-style camel './types/schema_fixed.json#/definitions/' && types/gen-typemap"
   },
   "devDependencies": {
     "quicktype": "^23.0.11",

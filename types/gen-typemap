@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+OUT_FILE="./src/tau_types.ts"
+echo >> "$OUT_FILE"
+echo "export type EventTypeMap = {" >> "$OUT_FILE"
+jq -r \
+  '.definitions | keys | .[]' \
+  types/schema_fixed.json \
+  | sed -e 's/\./\-/g;p;s/[-_]/\./g;s/\b\(.\)/\u\1/g;s/\.//g' \
+  | paste -s -d' \n' \
+  | sed 's/\([-a-z_]*\)\(.*\)/"\1":\2,/' >> "$OUT_FILE"
+echo "};" >> "$OUT_FILE"
