@@ -14,12 +14,6 @@ export type Builders = {
 const builders: Builders = {} as Builders;
 builderNames.forEach((name) => ((builders as any)[name] = builder(name)));
 
-export const div = builder("div");
-export const p = builder("p");
-export const span = builder("span");
-export const strong = builder("strong");
-export const em = builder("em");
-
 type Constraint = ReturnType<typeof builder>;
 export const attr =
   <T extends Constraint>(base: T) =>

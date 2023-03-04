@@ -19,4 +19,8 @@ document.addEventListener("channel-follow", (e) => {
 
 const chatbox = $.className($.div, "chat-msg");
 document.addEventListener("chat-message", (e) => {
+  console.warn((e as any).detail);
+  $("#chat")!.append(
+    $.expire(10000, chatbox(`${(e as any).detail.data["message-text"]}`))
+  );
 });

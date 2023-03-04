@@ -19,7 +19,7 @@ const makeReconnectingWebsocket = (
       if (data["event"] === "keep_alive") {
         return;
       }
-      console.log(`[${name}] message received`);
+      console.log(`[${name}] message received`, data);
       onMessage(e);
     });
     socket.addEventListener("close", (e) => {

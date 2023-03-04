@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+echo >> types.ts
+echo "export type EventTypeMap = {" >> types.ts
+jq -r \
+  '.definitions | keys | .[]' \
+  schema2.json \
+  | sed -e 's/\./\-/g;p;s/[-_]/\./g;s/\b\(.\)/\u\1/g;s/\.//g' \
+  | paste -s -d' \n' \
+  | sed 's/\([-a-z_]*\)\(.*\)/"\1":\2,/' >> types.ts
+echo "};" >> types.ts
