@@ -7,7 +7,8 @@
     "start": "vite --host",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "gen-types": "node types/transform_schema.js && quicktype -o src/tau_types.ts --lang typescript --src-lang schema --no-runtime-typecheck --just-types --prefer-unions --acronym-style camel './types/schema_fixed.json#/definitions/' && types/gen-typemap"
+    "gen-types": "types/gen-typemap",
+    "update-schema": "curl -Ss https://raw.githubusercontent.com/Team-TAU/tau/main/eventsub_subscriptions.json -o types/schema.json"
   },
   "devDependencies": {
     "quicktype": "^23.0.11",
