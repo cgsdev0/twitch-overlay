@@ -1,3 +1,5 @@
+import { EventTypeMap } from "./tau_types";
+
 type NodeArray = Parameters<ParentNode["append"]>;
 const builder =
   <T extends keyof HTMLElementTagNameMap>(type: T) =>
@@ -52,13 +54,69 @@ export const expire = <T extends ReturnType<Constraint>>(
   return el;
 };
 
+type CrappyBoolean = "0" | "1";
+type ChatMessageKey = "chat-message";
+interface Emote {
+  id: string;
+  positions: [number, number];
+}
+interface ChatMessage {
+  irc_username: string;
+  data: {
+    command: string;
+    "message-text": string;
+    params: string[];
+    prefix: string;
+    raw: string;
+    tags: {
+      "badge-info": string;
+      badges: string;
+      "client-nonce": string;
+      color: string;
+      "display-name": string;
+      "emote-only"?: CrappyBoolean;
+      emotes: Emote;
+      "first-msg"?: CrappyBoolean;
+      flags: string;
+      id: string;
+      mod?: CrappyBoolean;
+      "msg-id"?: "highlighted-message";
+      "returning-chatter"?: CrappyBoolean;
+      "room-id": string;
+      subscriber?: CrappyBoolean;
+      "tmi-sent-ts": string;
+      turbo?: CrappyBoolean;
+      "user-id": string;
+      "user-type": string;
+    };
+  };
+}
+
+type EventKey = keyof EventTypeMap | ChatMessageKey;
+type TypeFromKey<Key extends EventKey> = Key extends keyof EventTypeMap
+  ? EventTypeMap[Key]
+  : Key extends ChatMessageKey
+  ? ChatMessage
+  : never;
+
+function listen<T extends EventKey>(
+  key: T,
+  cb: (e: CustomEvent<TypeFromKey<T>>) => void,
+  node?: HTMLElement
+): () => void {
+  const n = node || document;
+  n.addEventListener(key, cb as any);
+  return () => {
+    n.removeEventListener(key, cb as any);
+  };
+}
 export const $ = Object.assign(
   Object.assign(
     (...a: Parameters<(typeof document)["querySelector"]>) =>
       document.querySelector(...a),
     builders
   ),
-  { wattr, className, attr, expire }
+  { wattr, className, attr, expire, listen }
 );
 
 // const container = className(wattr(div, { this: "is a test" }), "container");
