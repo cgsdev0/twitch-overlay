@@ -1,4 +1,4 @@
-import { EventTypeMap } from "./tau_types";
+import { EventTypeMap } from "tau-types";
 
 type NodeArray = Parameters<ParentNode["append"]>;
 const builder =
