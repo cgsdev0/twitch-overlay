@@ -11,8 +11,11 @@
     "update-schema": "curl -Ss https://raw.githubusercontent.com/Team-TAU/tau/main/eventsub_subscriptions.json -o types/schema.json"
   },
   "devDependencies": {
+    "csstype": "^3.1.1",
+    "postcss": "^8.4.21",
+    "postcss-nesting": "^11.2.1",
     "quicktype": "^23.0.11",
-    "tau-types": "^0.0.1",
+    "tau-types": "^0.0.2",
     "typescript": "^4.9.3",
     "vite": "^4.1.0",
     "vite-tsconfig-paths": "^4.0.5"

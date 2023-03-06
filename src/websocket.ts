@@ -1,3 +1,4 @@
+import { $ } from "dom";
 const makeReconnectingWebsocket = (
   name: string,
   uri: string,
@@ -9,8 +10,7 @@ const makeReconnectingWebsocket = (
       console.log(`[${name}] socket opened!`);
       socket.send(
         JSON.stringify({
-          token:
-            window.location.hash.slice(1) || localStorage.getItem("tau-key"),
+          token: $.tauKey(),
         })
       );
     });

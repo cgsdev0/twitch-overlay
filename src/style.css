@@ -1,5 +1,5 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: Hack NF, Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
   font-size: 24pt;
@@ -13,6 +13,10 @@
   -webkit-text-size-adjust: 100%;
 }
 
+p {
+  margin: 0;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -21,36 +25,97 @@ body {
   width: 100vw;
 }
 
+body > div {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
 div.follow {
   background-color: red;
 }
 
-#app {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
 #chat {
-  display: flex;
-  flex-direction: column;
   gap: 0.5em;
-  width: 100%;
-  height: 100%;
-  position: absolute;
+  --from-bottom: 460px;
+  --from-right: 80px;
+  padding-right: var(--from-right);
+  width: calc(100% - var(--from-right));
+  padding-bottom: var(--from-bottom);
+  height: calc(100% - var(--from-bottom));
   justify-content: flex-end;
   align-items: flex-end;
-  top: 0;
-  left: 0;
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    transparent 27px,
+    black 63px,
+    black calc(100%)
+  );
+  -webkit-mask-size: 100% 100%;
+  -webkit-mask-position: 0 0, 100% 0;
+  -webkit-mask-repeat: no-repeat, no-repeat;
+}
+.chat-msg {
+  flex-shrink: 0;
+  opacity: 0.8;
+  overflow: hidden;
+  font-size: 14pt;
+  padding: 6px 10px;
+  width: 300px;
+  min-height: 57px;
+  max-height: 138px;
+  color: white;
+  background-color: #24304d;
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  text-transform: lowercase;
+  box-shadow: 0px 0px 42px 10px #00000063;
+}
+.chat-msg .username {
+  font-weight: bold;
 }
 
-.chat-msg {
-  width: 300px;
-  height: 120px;
-  background-color: white;
-  color: black;
+.chat-msg img {
+  object-fit: cover;
+}
+
+#shoutout {
+  justify-content: center;
+  align-items: center;
+}
+
+.shoutout {
+  filter: drop-shadow(0 0 0.75rem #111);
+}
+
+.shoutout iframe {
+  border: 3px solid #e0e0e0;
+  border-radius: 24px;
+}
+
+.shoutout h1 {
+  align-self: center;
+  text-align: center;
+  background-color: black;
+  border-radius: 24px;
+}
+
+.fade-out {
+  opacity: 0;
+  transition: opacity 4s forwards;
+}
+
+.slide-up {
+  transition: all 1s ease-out, opacity 0.5s ease-out;
+}
+.slide-up-trigger {
+  min-height: 0px;
+  max-height: 0px;
+  opacity: 0;
+  height: 0px;
 }

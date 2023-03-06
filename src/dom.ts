@@ -1,4 +1,5 @@
 import { EventTypeMap } from "tau-types";
+import type * as CSS from "csstype";
 
 type NodeArray = Parameters<ParentNode["append"]>;
 const builder =
@@ -9,38 +10,70 @@ const builder =
     return newEl;
   };
 
-const builderNames = ["div", "p", "span", "strong", "em"] as const;
+const builderNames = [
+  "h1",
+  "h2",
+  "h3",
+  "h4",
+  "h5",
+  "iframe",
+  "img",
+  "div",
+  "p",
+  "span",
+  "strong",
+  "em",
+] as const;
 export type Builders = {
   [K in (typeof builderNames)[number]]: ReturnType<typeof builder<K>>;
 };
 const builders: Builders = {} as Builders;
 builderNames.forEach((name) => ((builders as any)[name] = builder(name)));
 
+type Attributes = Record<string, string | number>;
 type Constraint = ReturnType<typeof builder>;
 export const attr =
   <T extends Constraint>(base: T) =>
-  (attributes: Record<string, string>, ...that: NodeArray) => {
+  (attributes: Attributes, ...that: NodeArray) => {
     const el = base(...that);
     Object.entries(attributes).forEach(([attr, val]) => {
-      el.setAttribute(attr, val);
+      if (typeof val === "number") {
+        el.setAttribute(attr, val.toString());
+      } else {
+        el.setAttribute(attr, val);
+      }
     });
-    return el;
+    return el as ReturnType<T>;
   };
 export const wattr =
-  <T extends Constraint>(base: T, attributes: Record<string, string>) =>
+  <T extends Constraint>(base: T, attributes: Attributes) =>
   (...that: NodeArray) => {
     const el = base(...that);
     Object.entries(attributes).forEach(([attr, val]) => {
-      el.setAttribute(attr, val);
+      if (typeof val === "number") {
+        el.setAttribute(attr, val.toString());
+      } else {
+        el.setAttribute(attr, val);
+      }
     });
-    return el;
+    return el as ReturnType<T>;
   };
 export const className =
   <T extends Constraint>(base: T, className: string) =>
   (...that: NodeArray) => {
     const el = base(...that);
     el.className = className;
-    return el;
+    return el as ReturnType<T>;
+  };
+
+export const slideUp =
+  <T extends Constraint>(base: T) =>
+  (...that: NodeArray) => {
+    const el = base(...that);
+    el.classList.add("slide-up-trigger");
+    el.classList.add("slide-up");
+    setTimeout(() => el.classList.remove("slide-up-trigger"), 1);
+    return el as ReturnType<T>;
   };
 
 export const expire = <T extends ReturnType<Constraint>>(
@@ -48,6 +81,12 @@ export const expire = <T extends ReturnType<Constraint>>(
   el: T,
   transitionOut?: string
 ) => {
+  if (transitionOut) {
+    setTimeout(() => {
+      el.classList.add(transitionOut);
+    }, after);
+    after += 4000;
+  }
   setTimeout(() => {
     el.remove();
   }, after);
@@ -58,7 +97,7 @@ type CrappyBoolean = "0" | "1";
 type ChatMessageKey = "chat-message";
 interface Emote {
   id: string;
-  positions: [number, number];
+  positions: Array<[number, number]>;
 }
 interface ChatMessage {
   irc_username: string;
@@ -75,7 +114,7 @@ interface ChatMessage {
       color: string;
       "display-name": string;
       "emote-only"?: CrappyBoolean;
-      emotes: Emote;
+      emotes: Emote[];
       "first-msg"?: CrappyBoolean;
       flags: string;
       id: string;
@@ -92,9 +131,34 @@ interface ChatMessage {
   };
 }
 
+interface TauMessage<T, K> {
+  id: string;
+  event_id: string;
+  event_type: K;
+  event_data: T;
+  event_source: string;
+  created: string;
+  origin: "twitch" | "replay";
+}
+
+type RemoveIndex<T> = {
+  [K in keyof T]: string;
+};
+type CSSType = Partial<RemoveIndex<CSS.PropertiesHyphen>>;
+const styles = (...styleObjects: CSSType[]): string => {
+  let result: CSSType = {};
+  styleObjects.forEach((s) => {
+    Object.assign(result, s);
+  });
+  const r = Object.entries(result)
+    .map(([key, val]) => `${key}: ${val};`)
+    .join(" ");
+  return r;
+};
+
 type EventKey = keyof EventTypeMap | ChatMessageKey;
 type TypeFromKey<Key extends EventKey> = Key extends keyof EventTypeMap
-  ? EventTypeMap[Key]
+  ? TauMessage<EventTypeMap[Key], Key>
   : Key extends ChatMessageKey
   ? ChatMessage
   : never;
@@ -110,13 +174,18 @@ function listen<T extends EventKey>(
     n.removeEventListener(key, cb as any);
   };
 }
+
+const tauKey = () => {
+  return window.location.hash.slice(1) || localStorage.getItem("tau-key");
+};
+
 export const $ = Object.assign(
   Object.assign(
     (...a: Parameters<(typeof document)["querySelector"]>) =>
       document.querySelector(...a),
     builders
   ),
-  { wattr, className, attr, expire, listen }
+  { wattr, className, attr, expire, listen, styles, slideUp, tauKey }
 );
 
 // const container = className(wattr(div, { this: "is a test" }), "container");
