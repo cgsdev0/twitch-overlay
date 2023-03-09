@@ -1,17 +1,13 @@
 import { $ } from "dom";
+import { makeHelixRequest } from "../auth";
 import { enqueueAlert } from "../queue";
 
 export const setupShoutoutAlerts = () => {
   const findClip = async (broadcaster_id: string) => {
     const start = new Date(Date.now() - 60 * 60 * 24 * 365 * 1000);
     const end = new Date();
-    const result = await window.fetch(
-      `https://tau.cgs.dev/api/twitch/helix/clips?broadcaster_id=${broadcaster_id}&first=100&started_at=${start.toISOString()}&ended_at=${end.toISOString()}`,
-      {
-        headers: {
-          Authorization: `Token ${$.tauKey()}`,
-        },
-      }
+    const result = await makeHelixRequest(
+      `/clips?broadcaster_id=${broadcaster_id}&first=100&started_at=${start.toISOString()}&ended_at=${end.toISOString()}`
     );
     const data = await result.json();
     function get_random<T>(list: Array<T>): T {

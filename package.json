@@ -11,6 +11,7 @@
     "update-schema": "curl -Ss https://raw.githubusercontent.com/Team-TAU/tau/main/eventsub_subscriptions.json -o types/schema.json"
   },
   "devDependencies": {
+    "@types/spotify-api": "^0.0.20",
     "csstype": "^3.1.1",
     "postcss": "^8.4.21",
     "postcss-nesting": "^11.2.1",

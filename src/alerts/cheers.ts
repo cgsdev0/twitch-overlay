@@ -1,4 +1,5 @@
 import { $ } from "dom";
+import { makeHelixRequest } from "../auth";
 import { enqueueAlert } from "../queue";
 
 interface ScaledCheermotes {
@@ -40,13 +41,8 @@ export const getCheermotes = async (
 ): Promise<CheermotesData> => {
   let cheermoteCache = null;
   const refetch = async (broadcaster_id: string) => {
-    const result = await window.fetch(
-      `https://tau.cgs.dev/api/twitch/helix/bits/cheermotes?broadcaster_id=${broadcaster_id}`,
-      {
-        headers: {
-          Authorization: `Token ${$.tauKey()}`,
-        },
-      }
+    const result = await makeHelixRequest(
+      `/bits/cheermotes?broadcaster_id=${broadcaster_id}`
     );
     const data = await result.json();
     return data;

@@ -178,17 +178,13 @@ function listen<T extends EventKey>(
   };
 }
 
-const tauKey = () => {
-  return window.location.hash.slice(1) || localStorage.getItem("tau-key");
-};
-
 export const $ = Object.assign(
   Object.assign(
     (...a: Parameters<(typeof document)["querySelector"]>) =>
       document.querySelector(...a),
     builders
   ),
-  { wattr, className, attr, expire, listen, styles, slideUp, tauKey }
+  { wattr, className, attr, expire, listen, styles, slideUp }
 );
 
 // const container = className(wattr(div, { this: "is a test" }), "container");

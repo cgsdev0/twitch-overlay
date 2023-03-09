@@ -1,4 +1,4 @@
-import { $ } from "dom";
+import { getSecret } from "./auth";
 const makeReconnectingWebsocket = (
   name: string,
   uri: string,
@@ -10,7 +10,7 @@ const makeReconnectingWebsocket = (
       console.log(`[${name}] socket opened!`);
       socket.send(
         JSON.stringify({
-          token: $.tauKey(),
+          token: getSecret("TAU_TOKEN"),
         })
       );
     });
