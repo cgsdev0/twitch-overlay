@@ -43,7 +43,7 @@ const fetchSpotifyAccessToken = async () => {
 let spotify_access_token: string | null = null;
 export const makeSpotifyRequest = async <T>(
   endpoint: RelativeEndpoint
-): Promise<T> => {
+): Promise<T | null> => {
   const tryFetch = () =>
     window.fetch(`https://api.spotify.com${endpoint}`, {
       headers: { Authorization: `Bearer ${spotify_access_token}` },
@@ -56,6 +56,9 @@ export const makeSpotifyRequest = async <T>(
   }
   if (!result.ok) {
     throw new Error("Spotify API error", { cause: result });
+  }
+  if (result.status === 204) {
+    return null;
   }
   return await result.json();
 };

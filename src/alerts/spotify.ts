@@ -44,16 +44,15 @@ export const setupSpotifyAlerts = async () => {
       await makeSpotifyRequest<SpotifyApi.CurrentPlaybackResponse>(
         "/v1/me/player"
       );
-    const { item } = playerState;
-    if (listening_to === undefined) {
-      listening_to = item;
+    if (listening_to === undefined && playerState) {
+      listening_to = playerState.item;
     }
-    if (!playerState.is_playing) {
+    if (!playerState?.is_playing) {
       listening_to = null;
-    } else if (listening_to?.id !== item?.id) {
-      if (item) {
-        songChange(item);
-        listening_to = item;
+    } else if (listening_to?.id !== playerState.item?.id) {
+      if (playerState.item) {
+        songChange(playerState.item);
+        listening_to = playerState.item;
       }
     }
     setTimeout(checkPlayerState, 1000);
