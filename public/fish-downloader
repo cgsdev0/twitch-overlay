@@ -1,0 +1,12 @@
+#!/bin/bash
+
+ALL_FISH="$(jq -r 'to_entries[] | [.key, .value] | @tsv' ~/fish_images.json)"
+echo "$ALL_FISH" | while IFS= read -r fish; do
+    fish_id=$(echo "$fish" | cut -f1)
+    fish_url=$(echo "$fish" | cut -f2-)
+    echo "-----------------"
+    echo "$fish"
+    echo "$fish_id"
+    echo "$fish_url"
+    curl "$fish_url" -o "${fish_id}.png"
+done

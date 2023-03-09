@@ -30,13 +30,14 @@ export type Builders = {
 const builders: Builders = {} as Builders;
 builderNames.forEach((name) => ((builders as any)[name] = builder(name)));
 
-type Attributes = Record<string, string | number>;
+type Attributes = Record<string, string | number | undefined>;
 type Constraint = ReturnType<typeof builder>;
 export const attr =
   <T extends Constraint>(base: T) =>
   (attributes: Attributes, ...that: NodeArray) => {
     const el = base(...that);
     Object.entries(attributes).forEach(([attr, val]) => {
+      if (typeof val === "undefined") return;
       if (typeof val === "number") {
         el.setAttribute(attr, val.toString());
       } else {
@@ -50,6 +51,7 @@ export const wattr =
   (...that: NodeArray) => {
     const el = base(...that);
     Object.entries(attributes).forEach(([attr, val]) => {
+      if (typeof val === "undefined") return;
       if (typeof val === "number") {
         el.setAttribute(attr, val.toString());
       } else {
@@ -109,6 +111,7 @@ interface ChatMessage {
     raw: string;
     tags: {
       "badge-info": string;
+      bits?: string;
       badges: string;
       "client-nonce": string;
       color: string;

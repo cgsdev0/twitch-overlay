@@ -1,2 +1,3 @@
 node_modules/
 types/schema_fixed.json
+.env
