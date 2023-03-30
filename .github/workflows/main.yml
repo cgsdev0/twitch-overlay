@@ -34,3 +34,5 @@ jobs:
         # scp from local to remote
         scp: |
           'dist/*' => '/var/www/html/'
+        last_ssh: |
+          chown -R www-data:www-data /var/www/html
