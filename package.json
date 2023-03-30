@@ -6,9 +6,7 @@
   "scripts": {
     "start": "vite --host",
     "build": "tsc && vite build",
-    "preview": "vite preview",
-    "gen-types": "types/gen-typemap",
-    "update-schema": "curl -Ss https://raw.githubusercontent.com/Team-TAU/tau/main/eventsub_subscriptions.json -o types/schema.json"
+    "preview": "vite preview"
   },
   "devDependencies": {
     "@types/spotify-api": "^0.0.20",

@@ -1,5 +1,5 @@
 node_modules/
-types/schema_fixed.json
+dist/
 
 .env
 .env.*
