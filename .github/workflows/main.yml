@@ -30,7 +30,7 @@ jobs:
         user: root
         key: "${{ secrets.DO_SSH_KEY }}"
         first_ssh: |
-          rm -rf /root/overlay/*
+          rm -rf /var/www/html/*
         # scp from local to remote
         scp: |
-          'dist/*' => '/root/overlay/'
+          'dist/*' => '/var/www/html/'
