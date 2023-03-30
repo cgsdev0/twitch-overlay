@@ -1,0 +1,36 @@
+name: Deploy
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  build:
+    environment: 
+      name: production
+      url: https://overlay.cgs.dev/
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: '19.x'
+
+    - name: Build
+      run: npm install && npm run build
+      
+    # Deploy it
+    - name: ssh-scp-ssh-pipelines
+      uses: cross-the-world/ssh-scp-ssh-pipelines@78e864b4890087a58248ff39320406971ca88b89
+      with:
+        host: ${{ secrets.DO_SERVER_IP }}
+        user: root
+        key: ${{ secrets.DO_SSH_KEY }}
+        first_ssh: |
+          rm -rf /root/overlay/*
+        # scp from local to remote
+        scp: |
+          'dist/*' => '/root/overlay/'
