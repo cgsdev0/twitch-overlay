@@ -7,7 +7,7 @@ jobs:
   build:
     environment: 
       name: production
-      url: https://overlay.cgs.dev/
+      url: https://stream.cgs.dev/
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -28,7 +28,7 @@ jobs:
       with:
         host: ${{ secrets.DO_SERVER_IP }}
         user: root
-        key: ${{ secrets.DO_SSH_KEY }}
+        key: "${{ secrets.DO_SSH_KEY }}"
         first_ssh: |
           rm -rf /root/overlay/*
         # scp from local to remote
