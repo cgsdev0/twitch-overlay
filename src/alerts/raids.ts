@@ -7,7 +7,7 @@ export const setupRaidAlerts = () => {
       $.expire(
         5000,
         raid(
-          `${e.detail.event_data.user_name} raided with ${e.detail.event_data.viewers} viewers!`
+          `${e.detail.event_data.from_broadcaster_user_name} raided with ${e.detail.event_data.viewers} viewers!`
         )
       )
     );
