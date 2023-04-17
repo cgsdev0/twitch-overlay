@@ -82,6 +82,8 @@ const parseCheermotes = (
 };
 
 export const setupCheerAlerts = () => {
+  const sound = new Audio("/sounds/bits.ogg");
+  sound.volume = 0.2;
   const cheer = $.className($.div, "cheer");
   $.listen("channel-cheer", async (e) => {
     const { event_data: data } = e.detail;
@@ -97,6 +99,7 @@ export const setupCheerAlerts = () => {
       ),
       durationMs: 10000,
       destination: "#cheer",
+      onShow: () => sound.play(),
     });
   });
 };

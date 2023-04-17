@@ -35,12 +35,262 @@ body > div {
   left: 0;
 }
 
-div.follow {
-  background-color: red;
+@keyframes fade-in {
+  0% {
+    opacity: 0%;
+  }
+  100% {
+    opacity: 100%;
+  }
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 100%;
+  }
+  100% {
+    opacity: 0%;
+  }
+}
+
+@keyframes slide_in_follow {
+  0% {
+    transform: scale(200%) translate(65px, -800px);
+  }
+  100% {
+    transform: scale(200%) translate(65px, 40px);
+  }
+}
+
+@keyframes slide_out_follow {
+  0% {
+    margin-top: 0px;
+    opacity: 100%;
+  }
+  100% {
+    margin-top: -110px;
+    opacity: 0%;
+  }
+}
+div.follow.go_away {
+  animation: slide_out_follow 0.5s forwards;
+}
+
+#raid {
+  justify-content: center;
+  align-items: center;
+}
+
+.raid {
+  animation: fade-in 0.5s forwards;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  margin-top: -80px;
+}
+
+div.raid img {
+  width: 400px;
+  height: 400px;
+}
+
+div.raid p {
+  text-align: center;
+  width: 640px;
+  background-color: black;
+  border-radius: 24px;
+  padding: 14px;
+  font-size: 40px;
 }
 
 div.follow {
+  transform: scale(200%) translate(65px, 40px);
+  animation: slide_in_follow 1s forwards;
   background-color: blue;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 6px 12px 4px;
+  gap: 10px;
+
+  width: 201px;
+  height: 110px;
+
+  background: linear-gradient(
+    180deg,
+    #d0e4fb 0%,
+    #cee3f9 12.5%,
+    #d1e6f9 25%,
+    #d5e9fa 36.46%,
+    #ddecfb 50%,
+    #e3f1fd 63.54%,
+    #e9f6fe 76.56%,
+    #e9f7ff 88.54%,
+    #e4f4ff 100%
+  );
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.9), inset 1px 1px 0px #ffffff,
+    inset -1px -1px 0px rgba(97, 211, 244, 0.8);
+  border-radius: 6px;
+}
+
+div.follow .content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 8px;
+
+  width: 100%;
+  height: 80px;
+
+  flex: none;
+  order: 1;
+  align-self: stretch;
+  flex-grow: 0;
+}
+
+div.follow .content .options {
+  width: 100%;
+  height: 16px;
+
+  font-family: "Segoe UI";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  text-align: right;
+  color: #0066cc;
+  flex: none;
+  order: 1;
+  align-self: stretch;
+  flex-grow: 0;
+}
+
+div.follow .user {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px;
+  gap: 10px;
+
+  width: 100%;
+  height: 56px;
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+}
+
+div.follow .user section {
+  width: 56px;
+  height: 56px;
+  margin-bottom: -5px;
+  position: relative;
+}
+
+div.follow .user section img:first-child {
+  height: 56px;
+  width: 56px;
+}
+div.follow .user section img:last-child {
+  position: absolute;
+  top: 5px;
+  left: 6px;
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 2px;
+}
+
+div.follow .user .text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+
+  width: 111px;
+  height: 32px;
+  flex: none;
+  order: 1;
+  flex-grow: 1;
+}
+
+div.follow .user .text p {
+  width: 95px;
+  height: 16px;
+
+  font-family: "Segoe UI";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  color: #383838;
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+  text-align: left;
+}
+
+div.follow .user .text p:first-child {
+  font-weight: 600;
+}
+
+div.follow header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px;
+  gap: 18px;
+
+  height: 16px;
+  width: 100%;
+
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+}
+
+div.follow header span {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  padding: 0px;
+  gap: 5px;
+
+  width: 153px;
+  height: 16px;
+
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
+
+div.follow header span p {
+  width: 134px;
+  height: 16px;
+
+  font-family: "Segoe UI";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  color: #383838;
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+}
+
+div.follow header span img {
+  width: 14px;
+  height: 14px;
+
+  flex: none;
+  order: 0;
+  flex-grow: 0;
 }
 
 div.cheer {
@@ -282,7 +532,11 @@ div.gift {
 
 .fade-out {
   opacity: 0;
-  transition: opacity 4s forwards;
+  transition: opacity 4s;
+}
+
+.fade-out-500ms {
+  animation: fade-out 0.5s forwards;
 }
 
 .slide-up {

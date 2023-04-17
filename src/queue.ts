@@ -5,6 +5,7 @@ type Alert = {
   destination: string;
   durationMs: number;
   onShow?: () => void;
+  transitionOut?: { className: string; durationMs: number };
 };
 
 type AlertQueue = {
@@ -48,4 +49,10 @@ const showAlert = (queueId: QueueId, alert: Alert) => {
   $(alert.destination)!.append(alert.element);
   if (alert.onShow) alert.onShow();
   setTimeout(showNextAlert(queueId, alert.element), alert.durationMs);
+  if (alert.transitionOut) {
+    setTimeout(
+      () => alert.element.classList.add(alert.transitionOut!.className),
+      alert.durationMs - alert.transitionOut.durationMs
+    );
+  }
 };

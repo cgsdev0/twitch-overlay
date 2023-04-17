@@ -8,22 +8,23 @@ export const setupSubAlerts = () => {
     "2000": 2,
     "3000": 3,
   };
-  $.listen("channel-subscribe", (e) => {
-    const { event_data: data } = e.detail;
-    enqueueAlert("subs", {
-      element: subscribe(
-        `${data.user_name} just subscribed with tier ${
-          tierMap[data.tier as keyof typeof tierMap]
-        }!`
-      ),
-      destination: "#app",
-      durationMs: 8000,
-    });
-  });
+  // $.listen("channel-subscribe", (e) => {
+  //   const { event_data: data } = e.detail;
+  //   enqueueAlert("subs", {
+  //     element: subscribe(
+  //       `${data.user_name} just subscribed with tier ${
+  //         tierMap[data.tier as keyof typeof tierMap]
+  //       }!`
+  //     ),
+  //     destination: "#app",
+  //     durationMs: 8000,
+  //   });
+  // });
 
   $.listen("channel-subscription-message", (e) => {
     const { event_data: data } = e.detail;
     enqueueAlert("subs", {
+      onShow: () => {},
       element: subscribe(
         `${data.user_name} just subscribed with tier ${
           tierMap[data.tier as keyof typeof tierMap]
@@ -34,7 +35,6 @@ export const setupSubAlerts = () => {
     });
   });
 
-  
   const gift = $.className($.div, "gift");
   $.listen("channel-subscription-gift", (e) => {
     const { event_data: data } = e.detail;

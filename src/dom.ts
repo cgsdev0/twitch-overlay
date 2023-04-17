@@ -11,6 +11,8 @@ const builder =
   };
 
 const builderNames = [
+  "header",
+  "section",
   "h1",
   "h2",
   "h3",

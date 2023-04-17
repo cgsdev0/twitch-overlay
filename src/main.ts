@@ -17,7 +17,6 @@ import { setupSpotifyAlerts } from "./alerts/spotify";
 // make sub alerts better
 // goals
 // make follows nicer
-// spotify?
 // sounds?
 
 setupWebsocket();
