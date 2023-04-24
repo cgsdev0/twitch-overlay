@@ -9,6 +9,7 @@ import { setupCheerAlerts } from "./alerts/cheers";
 import { setupFishAlerts } from "./alerts/fish";
 import { setupSubGoalAlerts } from "./alerts/goal";
 import { setupSpotifyAlerts } from "./alerts/spotify";
+import { setupXkcdAlerts } from "./alerts/xkcd";
 
 // TODO:
 // something fancy if the goal is met??
@@ -30,5 +31,6 @@ setupRaidAlerts();
 setupFollowAlerts();
 setupCheerAlerts();
 setupFishAlerts();
+setupXkcdAlerts();
 setupSubGoalAlerts();
 setupSpotifyAlerts();
