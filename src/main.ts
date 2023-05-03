@@ -1,5 +1,9 @@
 import "./style.css";
-import { setupChatWebsocket, setupWebsocket } from "./websocket";
+import {
+  setupChatWebsocket,
+  setupMessageBrokerWebsocket,
+  setupWebsocket,
+} from "./websocket";
 import { setupSubAlerts } from "./alerts/subs";
 import { setupChatAlerts } from "./alerts/chat";
 import { setupShoutoutAlerts } from "./alerts/shoutouts";
@@ -10,6 +14,7 @@ import { setupFishAlerts } from "./alerts/fish";
 import { setupSubGoalAlerts } from "./alerts/goal";
 import { setupSpotifyAlerts } from "./alerts/spotify";
 import { setupXkcdAlerts } from "./alerts/xkcd";
+import { setupWheel } from "./alerts/wheel";
 
 // TODO:
 // something fancy if the goal is met??
@@ -22,6 +27,7 @@ import { setupXkcdAlerts } from "./alerts/xkcd";
 
 setupWebsocket();
 setupChatWebsocket();
+setupMessageBrokerWebsocket();
 
 // Alerts
 setupSubAlerts();
@@ -34,3 +40,4 @@ setupFishAlerts();
 setupXkcdAlerts();
 setupSubGoalAlerts();
 setupSpotifyAlerts();
+setupWheel();

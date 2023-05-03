@@ -17,6 +17,11 @@ p {
   margin: 0;
 }
 
+canvas#wheel {
+  position: absolute;
+  left: 140px;
+  top: 100px;
+}
 body {
   margin: 0;
   padding: 0;

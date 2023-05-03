@@ -161,11 +161,27 @@ const styles = (...styleObjects: CSSType[]): string => {
   return r;
 };
 
-type EventKey = keyof EventTypeMap | ChatMessageKey;
+type MessageBusEvent<K, T> = {
+  message_type: K;
+  source: string;
+  data: T;
+};
+type MessageBusEventType = {
+  "wheel-add-user": {
+    name: string;
+    weight: number;
+  };
+  "wheel-spin": {};
+  "wheel-show": {};
+};
+type MessageBusKey = keyof MessageBusEventType;
+type EventKey = keyof EventTypeMap | ChatMessageKey | MessageBusKey;
 type TypeFromKey<Key extends EventKey> = Key extends keyof EventTypeMap
   ? TauMessage<EventTypeMap[Key], Key>
   : Key extends ChatMessageKey
   ? ChatMessage
+  : Key extends MessageBusKey
+  ? MessageBusEvent<Key, MessageBusEventType[Key]>
   : never;
 
 function listen<T extends EventKey>(
