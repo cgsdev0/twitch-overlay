@@ -15,37 +15,25 @@ export const setupFishAlerts = () => {
   const nullfish = new Audio("/sounds/fish_null.mp3");
   nullfish.volume = 0.3;
 
-  $.listen("chat-message", (e) => {
+  $.listen("fish-catch", (e) => {
     const { data } = e.detail;
-    if (data.tags["display-name"] !== "goodcop_") return;
-    if (data["message-text"].match(/ \([a-zA-Z]* rod used\)$/)) {
-      const fish = data["message-text"]
-        .toLowerCase()
-        .split(" ")
-        .slice(3)
-        .filter((word) => word !== "first")
-        .join(" ")
-        .split(" (")[0];
+    const fish = data.fish.toLowerCase();
+    const classification = data.classification.toLowerCase();
 
-      const rarity = data["message-text"]
-        .match(/\(([a-zA-Z ]*)\)/)![1]
-        .toLowerCase();
-
-      enqueueAlert("fish", {
-        element: fishImg(fish),
-        onShow: () =>
-          setTimeout(
-            () =>
-              fish === "{null}fish"
-                ? nullfish.play()
-                : rarity === "legendary"
-                ? legendary.play()
-                : plop.play(),
-            100
-          ),
-        destination: "#pond",
-        durationMs: 3000,
-      });
-    }
+    enqueueAlert("fish", {
+      element: fishImg(fish),
+      onShow: () =>
+        setTimeout(
+          () =>
+            fish === "{null}fish"
+              ? nullfish.play()
+              : classification === "legendary"
+              ? legendary.play()
+              : plop.play(),
+          100
+        ),
+      destination: "#pond",
+      durationMs: 3000,
+    });
   });
 };

@@ -173,6 +173,7 @@ type MessageBusEventType = {
   };
   "wheel-spin": {};
   "wheel-show": {};
+  "fish-catch": { fish: string; classification: string };
 };
 type MessageBusKey = keyof MessageBusEventType;
 type EventKey = keyof EventTypeMap | ChatMessageKey | MessageBusKey;
