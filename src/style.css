@@ -13,6 +13,33 @@
   -webkit-text-size-adjust: 100%;
 }
 
+@keyframes talk {
+  from {
+    /* pushes the sun down past the viewport */
+    transform: translateY(0px);
+  }
+  to {
+    /* returns the sun to its default position */
+    transform: translateY(-14px);
+  }
+}
+
+#pngtuber img {
+  filter: saturate(40%);
+  filter: brightness(0.6);
+  position: absolute;
+  bottom: -48px;
+  right: 0;
+  width: 25%;
+  /* transition: transform 0.1s; */
+}
+
+#pngtuber .active {
+  filter: initial;
+  animation: 0.11s ease-in 0s infinite alternate talk;
+  /* transform: translateY(-20px); */
+}
+
 p {
   margin: 0;
 }

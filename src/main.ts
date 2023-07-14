@@ -15,6 +15,7 @@ import { setupSubGoalAlerts } from "./alerts/goal";
 import { setupSpotifyAlerts } from "./alerts/spotify";
 import { setupXkcdAlerts } from "./alerts/xkcd";
 import { setupWheel } from "./alerts/wheel";
+import { setupPngTuber } from "./pngtuber";
 
 // TODO:
 // something fancy if the goal is met??
@@ -25,19 +26,24 @@ import { setupWheel } from "./alerts/wheel";
 // make follows nicer
 // sounds?
 
-setupWebsocket();
-setupChatWebsocket();
-setupMessageBrokerWebsocket();
+// TODO: refactor this AWFUL router
+if (window.location.pathname === "/") {
+  setupWebsocket();
+  setupChatWebsocket();
+  setupMessageBrokerWebsocket();
 
-// Alerts
-setupSubAlerts();
-setupChatAlerts();
-setupShoutoutAlerts();
-setupRaidAlerts();
-setupFollowAlerts();
-setupCheerAlerts();
-setupFishAlerts();
-setupXkcdAlerts();
-setupSubGoalAlerts();
-setupSpotifyAlerts();
-setupWheel();
+  // Alerts
+  setupSubAlerts();
+  setupChatAlerts();
+  setupShoutoutAlerts();
+  setupRaidAlerts();
+  setupFollowAlerts();
+  setupCheerAlerts();
+  setupFishAlerts();
+  setupXkcdAlerts();
+  setupSubGoalAlerts();
+  setupSpotifyAlerts();
+  setupWheel();
+} else if (window.location.pathname === "/pngtuber") {
+  setupPngTuber();
+}
