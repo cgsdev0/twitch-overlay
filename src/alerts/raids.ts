@@ -5,7 +5,7 @@ import { makeHelixRequest } from "../auth";
 export const setupRaidAlerts = () => {
   const raid = $.className($.div, "raid");
   const sound = new Audio("/sounds/raid.ogg");
-  sound.volume = 0.2;
+  sound.volume = 0.16;
   $.listen("channel-raid", async (e) => {
     if (e.detail.event_data.from_broadcaster_user_name === "badcop_") return;
     const result = await makeHelixRequest(
