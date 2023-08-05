@@ -31,6 +31,9 @@ export const setupFollowAlerts = () => {
   const sound = new Audio("/sounds/msn_messenger.mp3");
   sound.volume = 0.2;
   $.listen("channel-follow", async (e) => {
+    const dupeKey = `followed-by-${e.detail.event_data.user_login}`;
+    if (localStorage.getItem(dupeKey)) return;
+    localStorage.setItem(dupeKey, true);
     const result = await makeHelixRequest(
       `/users?login=${e.detail.event_data.user_login}`
     );
