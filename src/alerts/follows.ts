@@ -33,7 +33,7 @@ export const setupFollowAlerts = () => {
   $.listen("channel-follow", async (e) => {
     const dupeKey = `followed-by-${e.detail.event_data.user_login}`;
     if (localStorage.getItem(dupeKey)) return;
-    localStorage.setItem(dupeKey, true);
+    localStorage.setItem(dupeKey, "so true");
     const result = await makeHelixRequest(
       `/users?login=${e.detail.event_data.user_login}`
     );
