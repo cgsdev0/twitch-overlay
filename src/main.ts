@@ -29,12 +29,10 @@ import { setupPngTuber } from "./pngtuber";
 // TODO: refactor this AWFUL router
 if (window.location.pathname === "/") {
   setupWebsocket();
-  setupChatWebsocket();
   setupMessageBrokerWebsocket();
 
   // Alerts
   setupSubAlerts();
-  setupChatAlerts();
   setupShoutoutAlerts();
   setupRaidAlerts();
   setupFollowAlerts();
@@ -44,6 +42,10 @@ if (window.location.pathname === "/") {
   setupSubGoalAlerts();
   setupSpotifyAlerts();
   setupWheel();
+} else if (window.location.pathname === "/chat") {
+  console.warn("chat");
+  setupChatWebsocket();
+  setupChatAlerts();
 } else if (window.location.pathname === "/pngtuber") {
   setupPngTuber();
 }

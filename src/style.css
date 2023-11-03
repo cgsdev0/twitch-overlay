@@ -513,7 +513,27 @@ div.gift {
   transform: translateX(600px);
 }
 
-#chat {
+#chat-bottom {
+  --from-bottom: 282px;
+  --from-right: 600px;
+  height: var(--from-bottom);
+  padding-left: 40px;
+  margin-top: calc(99vh - var(--from-bottom));
+  width: calc(100vw - var(--from-right));
+  justify-content: flex-end;
+  align-items: flex-end;
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    transparent 0px,
+    black 32px,
+    black calc(100%)
+  );
+  -webkit-mask-size: 100% 100%;
+  -webkit-mask-position: 0 0, 100% 0;
+  -webkit-mask-repeat: no-repeat, no-repeat;
+}
+#chat-side {
   gap: 0.5em;
   --from-bottom: 460px;
   --from-right: 80px;
@@ -534,13 +554,22 @@ div.gift {
   -webkit-mask-position: 0 0, 100% 0;
   -webkit-mask-repeat: no-repeat, no-repeat;
 }
-.chat-msg {
+.chat-msg-bottom {
+  flex-direction: row;
+  display: flex;
+  opacity: 0.8;
+  font-size: 18pt;
+  width: 100%;
+  height: 31px;
+  color: white;
+}
+.chat-msg-side {
   flex-shrink: 0;
   opacity: 0.8;
   overflow: hidden;
   font-size: 14pt;
   padding: 6px 10px;
-  width: 300px;
+  width: 360px;
   min-height: 57px;
   max-height: 138px;
   color: white;
@@ -550,11 +579,17 @@ div.gift {
   text-transform: lowercase;
   box-shadow: 0px 0px 42px 10px #00000063;
 }
-.chat-msg .username {
+.chat-msg-bottom .username {
+  font-weight: bold;
+}
+.chat-msg-bottom .msg:before {
+  content: ":\00a0";
+}
+.chat-msg-side .username {
   font-weight: bold;
 }
 
-.chat-msg img {
+.chat-msg-side img {
   object-fit: cover;
 }
 

@@ -2,8 +2,10 @@ import { $ } from "dom";
 import { cheermoteParser, getCheermotes } from "./cheers";
 
 export const setupChatAlerts = () => {
-  const chatbox = $.attr($.slideUp($.className($.div, "chat-msg")));
-  const username = $.className($.p, "username");
+  const position =
+    new URLSearchParams(window.location.search).get("position") || "side";
+  const chatbox = $.attr($.slideUp($.className($.div, `chat-msg-${position}`)));
+  const username = $.attr($.className($.p, "username"));
   const msg = $.className($.p, "msg");
   const twitchEmote = (id: string, size: number) =>
     $.wattr($.img, {
@@ -53,17 +55,30 @@ export const setupChatAlerts = () => {
         .flat();
     }
     const isSub = data.tags.subscriber === "1";
-    $("#chat")!.append(
+    $(`#chat-${position}`)!.append(
       $.expire(
         60000,
         chatbox(
-          {
-            style: $.styles({
-              border: `3px solid ${data.tags.color}`,
-              "box-shadow": isSub ? `0px 0px 36px 7px ${data.tags.color}` : "",
-            }),
-          },
-          username(data.tags["display-name"]),
+          position === "side"
+            ? {
+                style: $.styles({
+                  border: `3px solid ${data.tags.color}`,
+                  "box-shadow": isSub
+                    ? `0px 0px 36px 7px ${data.tags.color}`
+                    : "",
+                }),
+              }
+            : {},
+          username(
+            position === "bottom"
+              ? {
+                  style: $.styles({
+                    color: `${data.tags.color}`,
+                  }),
+                }
+              : {},
+            data.tags["display-name"]
+          ),
           msg(...msgSliced.filter((s) => s !== ""))
         ),
         "fade-out"
