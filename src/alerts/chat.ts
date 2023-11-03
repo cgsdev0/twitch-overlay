@@ -37,7 +37,11 @@ export const setupChatAlerts = () => {
       msgSliced.push(
         twitchEmote(
           emote.id,
-          data.tags["emote-only"] === "1" ? (emotes.length === 1 ? 90 : 50) : 22
+          data.tags["emote-only"] === "1" && position === "side"
+            ? emotes.length === 1
+              ? 90
+              : 50
+            : 22
         )
       );
     });
