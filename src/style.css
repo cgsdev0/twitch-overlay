@@ -557,6 +557,8 @@ div.gift {
 .chat-msg-bottom {
   flex-direction: row;
   display: flex;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   opacity: 0.8;
   font-size: 18pt;
   width: 100%;
