@@ -598,6 +598,46 @@ div.gift {
 #goal {
   align-items: flex-end;
 }
+.follow-goal-container {
+  width: 100vw;
+  height: 120px;
+  text-align: center;
+  transition: transform 1s, opacity 1s;
+  color: black;
+}
+
+.follow-goal-container .progress-bar {
+  background-color: #446088;
+  height: 59px;
+  overflow: hidden;
+  border-radius: 12px;
+  position: relative;
+  line-height: 29px;
+  font-size: 16pt;
+}
+.follow-goal-container .progress-bar p {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  z-index: 1000;
+  color: black;
+}
+.follow-goal-container .progress-bar-inner {
+  background-color: white;
+  height: calc(100% - 4px);
+  width: 0%;
+  margin: 2px;
+  border-radius: 12px;
+  text-align: center;
+  transition: width 1s;
+}
+#follow-goal .hide {
+  transform: translateY(-31px);
+  opacity: 40%;
+}
+
 .goal-container {
   margin: 40px;
   background-color: #7aa2e7;

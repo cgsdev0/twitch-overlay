@@ -11,7 +11,7 @@ import { setupRaidAlerts } from "./alerts/raids";
 import { setupFollowAlerts } from "./alerts/follows";
 import { setupCheerAlerts } from "./alerts/cheers";
 import { setupFishAlerts } from "./alerts/fish";
-import { setupSubGoalAlerts } from "./alerts/goal";
+import { setupFollowGoalAlerts, setupSubGoalAlerts } from "./alerts/goal";
 import { setupSpotifyAlerts } from "./alerts/spotify";
 import { setupXkcdAlerts } from "./alerts/xkcd";
 import { setupWheel } from "./alerts/wheel";
@@ -39,7 +39,8 @@ if (window.location.pathname === "/") {
   setupCheerAlerts();
   setupFishAlerts();
   setupXkcdAlerts();
-  setupSubGoalAlerts();
+  // setupSubGoalAlerts();
+  setupFollowGoalAlerts();
   setupSpotifyAlerts();
   setupWheel();
 } else if (window.location.pathname === "/chat") {
