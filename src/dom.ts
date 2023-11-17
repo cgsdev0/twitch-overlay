@@ -136,7 +136,7 @@ interface ChatMessage {
   };
 }
 
-interface TauMessage<T, K> {
+export interface TauMessage<T, K> {
   id: string;
   event_id: string;
   event_type: K;

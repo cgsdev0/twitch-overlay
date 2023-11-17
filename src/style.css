@@ -353,10 +353,140 @@ div.cheer {
   gap: 10px;
 }
 
-div.subscribe {
-  background-color: orange;
+p.subscribe {
+  margin-top: 260px;
+  background-color: black;
+  font-size: 38pt;
+  text-align: center;
+  animation: subscribeBanner 8s forwards;
+  opacity: 0%;
 }
 
+@keyframes subscribeBanner {
+  40% {
+    opacity: 0%;
+  }
+  45% {
+    opacity: 100%;
+  }
+  90% {
+    transform: translateY(0);
+    opacity: 100%;
+  }
+  100% {
+    transform: translateY(-100px);
+    opacity: 0%;
+  }
+}
+
+div.subscribe {
+  width: 64px;
+  height: 64px;
+  position: absolute;
+  left: calc(960px - 64px);
+  top: calc(540px - 64px);
+  border: solid 32px red;
+  border-radius: 8000px;
+  background-size: contain;
+  -webkit-mask-image: url("./fish/char.png");
+  -webkit-mask-mode: alpha;
+  mask-image: url("./fish/char.png");
+  mask-mode: alpha;
+  animation: catchSubFish 1.5s forwards linear;
+  animation-delay: 1s;
+  transform: translate(0px, 1000px) rotate(180deg) scale(6) scaleX(-1);
+}
+
+div.subscribe.swim-away {
+  animation: swimAway 2s forwards linear;
+}
+
+@keyframes swimAway {
+  0% {
+    transform: translate(0px, 0px) rotate(0deg) scale(6) scaleX(-1);
+  }
+  20% {
+    transform: translate(calc(1600px * 0.2 * 0.2), 0px) rotate(10deg) scale(6)
+      scaleX(-1);
+  }
+  40% {
+    transform: translate(calc(1600px * 0.4 * 0.4), 0px) rotate(-10deg) scale(6)
+      scaleX(-1);
+  }
+  60% {
+    transform: translate(calc(1600px * 0.6 * 0.6), 0px) rotate(10deg) scale(6)
+      scaleX(-1);
+  }
+  80% {
+    transform: translate(calc(1600px * 0.8 * 0.8), 0px) rotate(-10deg) scale(6)
+      scaleX(-1);
+  }
+  100% {
+    transform: translate(1600px, 0px) rotate(10deg) scale(6) scaleX(-1);
+  }
+}
+
+@keyframes catchSubFish {
+  0% {
+    transform: translate(0px, 1000px) rotate(-180deg) scale(6) scaleX(-1);
+  }
+  20% {
+    transform: translate(0px, 800px) rotate(0deg) scale(6) scaleX(-1);
+  }
+  40% {
+    transform: translate(0px, 600px) rotate(180deg) scale(6) scaleX(-1);
+  }
+  60% {
+    transform: translate(0px, 400px) rotate(360deg) scale(6) scaleX(-1);
+  }
+  80% {
+    transform: translate(0px, 200px) rotate(540deg) scale(6) scaleX(-1);
+  }
+  100% {
+    transform: translate(0px, 0px) rotate(720deg) scale(6) scaleX(-1);
+  }
+}
+.fisher {
+  width: 800px;
+  height: 800px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  transform: translate(1000px, 0px);
+}
+
+.reeling {
+  animation: fisherCatch 1.5s forwards;
+}
+.unreeling {
+  animation: fisherGoAway 1s forwards;
+}
+
+@keyframes fisherGoAway {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: translate(1000px, 0px);
+  }
+}
+@keyframes fisherCatch {
+  0% {
+    transform: translate(1000px, 0px);
+  }
+  50% {
+    transform: translate(0, 0px);
+  }
+  60% {
+    transform: translate(0, 0px);
+  }
+  80% {
+    transform: translate(-80px, 100px) rotate(-30deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
 div.gift {
   background-color: purple;
 }

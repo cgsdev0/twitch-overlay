@@ -5,6 +5,7 @@ type Alert = {
   destination: string;
   durationMs: number;
   onShow?: () => void;
+  onHide?: () => void;
   transitionOut?: { className: string; durationMs: number };
 };
 
@@ -34,8 +35,9 @@ export const enqueueAlert = (queueId: QueueId, alert: Alert) => {
   queue.push(alert);
 };
 
-const showNextAlert = (queueId: QueueId, toRemove: HTMLElement) => () => {
-  toRemove.remove();
+const showNextAlert = (queueId: QueueId, a: Alert) => () => {
+  if (a.onHide) a.onHide();
+  a.element.remove();
   if (!alertQueues[queueId].queue.length) {
     alertQueues[queueId].active = false;
     return;
@@ -48,7 +50,7 @@ const showAlert = (queueId: QueueId, alert: Alert) => {
   alertQueues[queueId].active = true;
   $(alert.destination)!.append(alert.element);
   if (alert.onShow) alert.onShow();
-  setTimeout(showNextAlert(queueId, alert.element), alert.durationMs);
+  setTimeout(showNextAlert(queueId, alert), alert.durationMs);
   if (alert.transitionOut) {
     setTimeout(
       () => alert.element.classList.add(alert.transitionOut!.className),
