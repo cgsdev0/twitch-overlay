@@ -3,6 +3,9 @@ import { ChannelGoalProgress } from "tau-types";
 import { shootConfetti } from "./confetti";
 
 export const setupFollowGoalAlerts = () => {
+  const confetti = new Audio("/sounds/confetti.mp3");
+  confetti.volume = 0.05;
+
   let persisted: undefined | ChannelGoalProgress;
   let startedAt = 0;
   const fromStorage = localStorage.getItem("follow-goal");
@@ -62,11 +65,12 @@ export const setupFollowGoalAlerts = () => {
     if (!data.type.includes("follow")) return;
     localStorage.setItem("follow-goal", JSON.stringify(data));
     updateText(data);
-    setTimeout(() => {
-      if (data.target_amount === data.current_amount) {
+    if (data.target_amount === data.current_amount) {
+      setTimeout(() => {
         shootConfetti();
-      }
-    }, 1000);
+        confetti.play();
+      }, 1000);
+    }
     show();
   });
 };
