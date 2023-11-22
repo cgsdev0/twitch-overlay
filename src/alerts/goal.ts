@@ -71,7 +71,9 @@ export const setupFollowGoalAlerts = () => {
         confetti.play();
       }, 1000);
     }
-    show();
+    if (data.target_amount >= data.current_amount) {
+      show();
+    }
   });
 };
 
