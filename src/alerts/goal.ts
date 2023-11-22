@@ -1,5 +1,6 @@
 import { $ } from "dom";
 import { ChannelGoalProgress } from "tau-types";
+import { shootConfetti } from "./confetti";
 
 export const setupFollowGoalAlerts = () => {
   let persisted: undefined | ChannelGoalProgress;
@@ -61,6 +62,11 @@ export const setupFollowGoalAlerts = () => {
     if (!data.type.includes("follow")) return;
     localStorage.setItem("follow-goal", JSON.stringify(data));
     updateText(data);
+    setTimeout(() => {
+      if (data.target_amount === data.current_amount) {
+        shootConfetti();
+      }
+    }, 1000);
     show();
   });
 };

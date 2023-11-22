@@ -44,7 +44,6 @@ if (window.location.pathname === "/") {
   setupSpotifyAlerts();
   setupWheel();
 } else if (window.location.pathname === "/chat") {
-  console.warn("chat");
   setupChatWebsocket();
   setupChatAlerts();
 } else if (window.location.pathname === "/pngtuber") {
