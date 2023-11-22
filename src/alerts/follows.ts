@@ -40,7 +40,7 @@ export const setupFollowAlerts = () => {
     const { data } = await result.json();
     const [twitchUser] = data;
     sound.play();
-    $("#app")!.append(
+    $("#follows")!.append(
       $.expire(
         8000,
         follow(

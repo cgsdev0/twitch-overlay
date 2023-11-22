@@ -19,6 +19,22 @@ export const setupFollowGoalAlerts = () => {
   $("#follow-goal")!.append(goal);
   goal.classList.add("hide");
 
+  let hideTimer: NodeJS.Timeout | number | null = null;
+
+  const show = () => {
+    goal.classList.remove("hide");
+    if (hideTimer) {
+      clearTimeout(hideTimer);
+    }
+    hideTimer = setTimeout(() => {
+      goal.classList.add("hide");
+    }, 8000);
+  };
+
+  $.listen("stream-online", (_) => {
+    show();
+  });
+
   $.listen("channel-goal-begin", (e) => {
     startedAt = Math.floor(e.detail.event_data.current_amount / 100.0) * 100;
     localStorage.setItem("follow-goal-started-at", startedAt.toString());
@@ -40,20 +56,12 @@ export const setupFollowGoalAlerts = () => {
     updateText(persisted);
   }
 
-  let hideTimer: NodeJS.Timeout | number | null = null;
-
   $.listen("channel-goal-progress", (e) => {
     const { event_data: data } = e.detail;
     if (!data.type.includes("follow")) return;
     localStorage.setItem("follow-goal", JSON.stringify(data));
     updateText(data);
-    goal.classList.remove("hide");
-    if (hideTimer) {
-      clearTimeout(hideTimer);
-    }
-    hideTimer = setTimeout(() => {
-      goal.classList.add("hide");
-    }, 8000);
+    show();
   });
 };
 

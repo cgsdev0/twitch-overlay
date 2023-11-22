@@ -164,8 +164,8 @@ export const tooDark = function (c: any, max = 50) {
 
 export const pickPaletteColor = (
   colorPalette?: string[],
-  dark = 40,
-  light = 150
+  dark = 120,
+  light = 250
 ): string => {
   if (!colorPalette || !colorPalette[0]) {
     return "red";

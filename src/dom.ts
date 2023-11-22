@@ -175,14 +175,36 @@ type MessageBusEventType = {
   "wheel-show": {};
   "fish-catch": { fish: string; classification: string };
 };
+type StreamOnlineType = {
+  "stream-online": {
+    id: string;
+    broadcaster_user_id: string;
+    boradcaster_user_login: string;
+    broadcaster_user_name: string;
+    type: string;
+    started_at: string;
+  };
+  "stream-offline": {
+    /* TODO: fact check this */
+    id: string;
+    broadcaster_user_id: string;
+    boradcaster_user_login: string;
+    broadcaster_user_name: string;
+    type: string;
+    started_at: string;
+  };
+};
 type MessageBusKey = keyof MessageBusEventType;
-type EventKey = keyof EventTypeMap | ChatMessageKey | MessageBusKey;
+type OnlineKey = keyof StreamOnlineType;
+type EventKey = keyof EventTypeMap | ChatMessageKey | MessageBusKey | OnlineKey;
 type TypeFromKey<Key extends EventKey> = Key extends keyof EventTypeMap
   ? TauMessage<EventTypeMap[Key], Key>
   : Key extends ChatMessageKey
   ? ChatMessage
   : Key extends MessageBusKey
   ? MessageBusEvent<Key, MessageBusEventType[Key]>
+  : Key extends OnlineKey
+  ? TauMessage<StreamOnlineType[Key], Key>
   : never;
 
 function listen<T extends EventKey>(
