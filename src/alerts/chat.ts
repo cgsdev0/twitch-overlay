@@ -61,7 +61,7 @@ export const setupChatAlerts = () => {
     const isSub = data.tags.subscriber === "1";
     $(`#chat-${position}`)!.append(
       $.expire(
-        60000,
+        6000000,
         chatbox(
           position === "side"
             ? {

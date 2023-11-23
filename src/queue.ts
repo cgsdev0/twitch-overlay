@@ -36,8 +36,8 @@ export const enqueueAlert = (queueId: QueueId, alert: Alert) => {
 };
 
 const showNextAlert = (queueId: QueueId, a: Alert) => () => {
-  if (a.onHide) a.onHide();
   a.element.remove();
+  if (a.onHide) a.onHide();
   if (!alertQueues[queueId].queue.length) {
     alertQueues[queueId].active = false;
     return;

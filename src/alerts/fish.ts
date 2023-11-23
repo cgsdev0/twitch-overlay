@@ -1,11 +1,14 @@
 import { $ } from "dom";
 import { enqueueAlert } from "../queue";
-export const setupFishAlerts = () => {
-  const fishImgUrl = (fish: string) => {
-    return `/fish/${encodeURIComponent(fish.toLowerCase())}.png`;
-  };
-  const fishImg = (fish: string) => $.wattr($.img, { src: fishImgUrl(fish) })();
+import { sendFishToArena } from "./arena";
 
+const fishImgUrl = (fish: string) => {
+  return `/fish/${encodeURIComponent(fish.toLowerCase())}.png`;
+};
+export const fishImg = (fish: string) =>
+  $.wattr($.img, { src: fishImgUrl(fish) })();
+
+export const setupFishAlerts = () => {
   const plop = new Audio("/sounds/fish_plop.mp3");
   plop.volume = 0.2;
 
@@ -19,9 +22,13 @@ export const setupFishAlerts = () => {
     const { data } = e.detail;
     const fish = data.fish.toLowerCase();
     const classification = data.classification.toLowerCase();
-
+    const f = fishImg(fish);
     enqueueAlert("fish", {
-      element: fishImg(fish),
+      element: f,
+      onHide: () => {
+        // good luck friend
+        sendFishToArena(f, fish, data.classification, data.caught_by);
+      },
       onShow: () =>
         setTimeout(
           () =>

@@ -1,5 +1,26 @@
 import confetti from "canvas-confetti";
 
+export const arenaConfetti = () => {
+  var duration = 1 * 1000;
+  var end = Date.now() + duration;
+
+  (function frame() {
+    confetti({
+      particleCount: 5,
+      spread: 45,
+      startVelocity: -40,
+      ticks: 100,
+      gravity: 1,
+      angle: 270 + 30,
+      scalar: 1,
+      decay: 0.92,
+      origin: { y: 0.32, x: 1.01 },
+    });
+    if (Date.now() < end) {
+      requestAnimationFrame(frame);
+    }
+  })();
+};
 export const shootConfetti = () => {
   var duration = 1 * 1000;
   var end = Date.now() + duration;

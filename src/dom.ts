@@ -166,6 +166,16 @@ type MessageBusEvent<K, T> = {
   source: string;
   data: T;
 };
+
+export type Classification =
+  | "common"
+  | "fairly_common"
+  | "uncommon"
+  | "scarce"
+  | "rare"
+  | "epic"
+  | "legendary"
+  | "null";
 type MessageBusEventType = {
   "wheel-add-user": {
     name: string;
@@ -173,7 +183,11 @@ type MessageBusEventType = {
   };
   "wheel-spin": {};
   "wheel-show": {};
-  "fish-catch": { fish: string; classification: string };
+  "fish-catch": {
+    fish: string;
+    classification: Classification;
+    caught_by: string;
+  };
 };
 type StreamOnlineType = {
   "stream-online": {
@@ -207,15 +221,39 @@ type TypeFromKey<Key extends EventKey> = Key extends keyof EventTypeMap
   ? TauMessage<StreamOnlineType[Key], Key>
   : never;
 
+// REGISTER ERROR OVERLAY
+const showErrorOverlay = (err: any) => {
+  // must be within function call because that's when the element is defined for sure.
+  const ErrorOverlay = customElements.get("vite-error-overlay");
+  // don't open outside vite environment
+  if (!ErrorOverlay) {
+    return;
+  }
+  console.log(err);
+  const overlay = new ErrorOverlay(err);
+  document.body.appendChild(overlay);
+};
+
+window.addEventListener("error", showErrorOverlay);
+window.addEventListener("unhandledrejection", ({ reason }) =>
+  showErrorOverlay(reason)
+);
 function listen<T extends EventKey>(
   key: T,
   cb: (e: CustomEvent<TypeFromKey<T>>) => void,
   node?: HTMLElement
 ): () => void {
+  const wrapped = (e: any) => {
+    try {
+      cb(e);
+    } catch (e) {
+      showErrorOverlay(e);
+    }
+  };
   const n = node || document;
-  n.addEventListener(key, cb as any);
+  n.addEventListener(key, wrapped);
   return () => {
-    n.removeEventListener(key, cb as any);
+    n.removeEventListener(key, wrapped);
   };
 }
 

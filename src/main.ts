@@ -16,6 +16,7 @@ import { setupSpotifyAlerts } from "./alerts/spotify";
 import { setupXkcdAlerts } from "./alerts/xkcd";
 import { setupWheel } from "./alerts/wheel";
 import { setupPngTuber } from "./pngtuber";
+import { setupArena } from "./alerts/arena";
 
 // TODO:
 // something fancy if the goal is met??
@@ -30,6 +31,8 @@ import { setupPngTuber } from "./pngtuber";
 if (window.location.pathname === "/") {
   setupWebsocket();
   setupMessageBrokerWebsocket();
+
+  setupArena();
 
   // Alerts
   setupSubAlerts();

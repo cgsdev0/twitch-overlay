@@ -56,19 +56,23 @@ export const setupMessageBrokerWebsocket = () => {
       }
     },
     (socket) => {
-      const listener = (e: any) => {
-        socket.send(
-          JSON.stringify({
-            message_type: "wheel-result",
-            data: e.detail,
-            source: "overlay",
-          })
+      const loopback = (key: string) => {
+        const listener = (e: any) => {
+          socket.send(
+            JSON.stringify({
+              message_type: key,
+              data: e.detail,
+              source: "overlay",
+            })
+          );
+        };
+        document.addEventListener(key, listener);
+        socket.addEventListener("close", () =>
+          document.removeEventListener(key, listener)
         );
       };
-      document.addEventListener("wheel-result", listener);
-      socket.addEventListener("close", () =>
-        document.removeEventListener("wheel-result", listener)
-      );
+      loopback("wheel-result");
+      loopback("fish-champion");
     }
   );
 };
