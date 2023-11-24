@@ -32,8 +32,6 @@ if (window.location.pathname === "/") {
   setupWebsocket();
   setupMessageBrokerWebsocket();
 
-  setupArena();
-
   // Alerts
   setupSubAlerts();
   setupShoutoutAlerts();
@@ -49,6 +47,9 @@ if (window.location.pathname === "/") {
 } else if (window.location.pathname === "/chat") {
   setupChatWebsocket();
   setupChatAlerts();
+} else if (window.location.pathname === "/arena") {
+  setupMessageBrokerWebsocket();
+  setupArena();
 } else if (window.location.pathname === "/pngtuber") {
   setupPngTuber();
 }

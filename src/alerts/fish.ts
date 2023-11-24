@@ -25,10 +25,6 @@ export const setupFishAlerts = () => {
     const f = fishImg(fish);
     enqueueAlert("fish", {
       element: f,
-      onHide: () => {
-        // good luck friend
-        sendFishToArena(f, fish, data.classification, data.caught_by);
-      },
       onShow: () =>
         setTimeout(
           () =>

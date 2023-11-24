@@ -684,12 +684,9 @@ div.gift {
 }
 
 #chat-bottom {
-  --from-bottom: 260px;
-  --from-right: 600px;
-  height: var(--from-bottom);
-  padding-left: 40px;
-  margin-top: calc(99vh - var(--from-bottom));
-  width: calc(100vw - var(--from-right));
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px 0px;
   justify-content: flex-end;
   align-items: flex-end;
   -webkit-mask-image: linear-gradient(
@@ -727,12 +724,10 @@ div.gift {
 .chat-msg-bottom {
   flex-direction: row;
   display: flex;
-  text-overflow: ellipsis;
-  white-space: nowrap;
   opacity: 0.8;
   font-size: 18pt;
   width: 100%;
-  height: 31px;
+  line-height: 31px;
   color: white;
 }
 .chat-msg-side {
@@ -803,16 +798,14 @@ div.gift {
   max-height: 0px;
   opacity: 0;
   height: 0px;
+  line-height: 0px;
 }
 
 #arena {
   overflow: hidden;
-  position: absolute;
-  top: 28px;
-  right: 0px;
-  left: unset;
-  width: 500px;
-  height: 280px;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
 }
 
 #arena .fighter {

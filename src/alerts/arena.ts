@@ -29,6 +29,15 @@ export const setupArena = () => {
       sendFighterToArena(fishImg(fishType), fishType, stats, caughtBy);
     });
   }
+
+  $.listen("fish-catch", (e) => {
+    const { data } = e.detail;
+    const fish = data.fish.toLowerCase();
+    const f = fishImg(fish);
+    setTimeout(() => {
+      sendFishToArena(f, fish, data.classification, data.caught_by);
+    }, 3000);
+  });
 };
 const commons: StatsGenerator = () => ({
   speed: d(20),
