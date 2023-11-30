@@ -41,14 +41,14 @@ export const setupArena = () => {
 };
 const commons: StatsGenerator = () => ({
   speed: d(20),
-  hp: 10 + 2 * d(8),
+  hp: 10 + d(8, 2),
   baseDmg: d(6),
   varDmg: d(4),
 });
 
 const rares: StatsGenerator = () => ({
   speed: d(20) + 1,
-  hp: 10 + 2 * d(10) + d(6),
+  hp: 10 + d(10, 2) + d(6),
   baseDmg: d(6) + 1,
   varDmg: d(4),
 });
@@ -61,13 +61,13 @@ const classModifiers: LootTable = {
   rare: rares,
   epic: () => ({
     speed: d(20) + 2,
-    hp: 10 + 2 * d(10) + d(6),
+    hp: 10 + d(10, 2) + d(6),
     baseDmg: d(8) + 2,
     varDmg: d(6),
   }),
   legendary: () => ({
     speed: d(20) + 3,
-    hp: 15 + 3 * d(10),
+    hp: 15 + d(10, 3),
     baseDmg: d(8) + 3,
     varDmg: 6,
   }),
@@ -127,7 +127,8 @@ const startCombat = () => {
     starting = false;
   }, 2000);
 };
-const d = (n: number) => Math.floor(Math.random() * n) + 1;
+const d = (n: number, c: number = 1): number =>
+  (--c ? d(n, c) : 0) + Math.floor(Math.random() * n) + 1;
 const rollStats = (classification: Classification): Stats => {
   const mods = classModifiers[classification]();
   return { ...mods, wins: 0, maxHp: mods.hp, originalHp: mods.hp };
