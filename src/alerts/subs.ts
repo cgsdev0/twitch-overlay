@@ -57,9 +57,10 @@ export const setupSubAlerts = () => {
     );
     const { data } = await result.json();
     const [twitchUser] = data;
+    console.log(twitchUser);
     const fish = subscribe({
       style: $.styles({
-        "background-image": `url("${twitchUser.profile_image_url}")`,
+        "background-image": `url('${twitchUser.profile_image_url}')`,
       }),
     });
     const profileImg = $.wattr($.img, {
