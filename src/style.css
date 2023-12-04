@@ -388,9 +388,9 @@ div.subscribe {
   border: solid 32px red;
   border-radius: 8000px;
   background-size: contain;
-  -webkit-mask-image: url("./fish/char.png");
+  -webkit-mask-image: url("/fish/char.png");
   -webkit-mask-mode: alpha;
-  mask-image: url("./fish/char.png");
+  mask-image: url("/fish/char.png");
   mask-mode: alpha;
   animation: catchSubFish 1.5s forwards linear;
   animation-delay: 1s;
