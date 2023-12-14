@@ -16,6 +16,10 @@ export const setupChatAlerts = () => {
 
   $.listen("irc-message", async (e) => {
     const data = e.detail;
+    if (data.command === "CLEARMSG") {
+      document.getElementById((data.tags as any)?.["target-msg-id"])?.remove();
+      return;
+    }
     if (data.command !== "PRIVMSG") {
       return;
     }
@@ -75,6 +79,7 @@ export const setupChatAlerts = () => {
         chatbox(
           position === "side"
             ? {
+                id: data.tags.id,
                 style: $.styles({
                   border: `3px solid ${data.tags.color}`,
                   "box-shadow": isSub
@@ -82,7 +87,9 @@ export const setupChatAlerts = () => {
                     : "",
                 }),
               }
-            : {},
+            : {
+                id: data.tags.id,
+              },
           username(
             position === "bottom"
               ? {
