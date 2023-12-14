@@ -98,41 +98,36 @@ export const expire = <T extends ReturnType<Constraint>>(
 };
 
 type CrappyBoolean = "0" | "1";
-type ChatMessageKey = "chat-message";
+type IRCMessageKey = "irc-message";
 interface Emote {
   id: string;
   positions: Array<[number, number]>;
 }
-interface ChatMessage {
-  irc_username: string;
-  data: {
-    command: string;
-    "message-text": string;
-    params: string[];
-    prefix: string;
-    raw: string;
-    tags: {
-      "badge-info": string;
-      bits?: string;
-      badges: string;
-      "client-nonce": string;
-      color: string;
-      "display-name": string;
-      "emote-only"?: CrappyBoolean;
-      emotes: Emote[];
-      "first-msg"?: CrappyBoolean;
-      flags: string;
-      id: string;
-      mod?: CrappyBoolean;
-      "msg-id"?: "highlighted-message";
-      "returning-chatter"?: CrappyBoolean;
-      "room-id": string;
-      subscriber?: CrappyBoolean;
-      "tmi-sent-ts": string;
-      turbo?: CrappyBoolean;
-      "user-id": string;
-      "user-type": string;
-    };
+interface IRCMessage {
+  command: string;
+  prefix: string;
+  sections: string[];
+  tags?: {
+    "badge-info": string;
+    bits?: string;
+    badges: string;
+    "client-nonce": string;
+    color: string;
+    "display-name": string;
+    "emote-only"?: CrappyBoolean;
+    emotes: Emote[];
+    "first-msg"?: CrappyBoolean;
+    flags: string;
+    id: string;
+    mod?: CrappyBoolean;
+    "msg-id"?: "highlighted-message";
+    "returning-chatter"?: CrappyBoolean;
+    "room-id": string;
+    subscriber?: CrappyBoolean;
+    "tmi-sent-ts": string;
+    turbo?: CrappyBoolean;
+    "user-id": string;
+    "user-type": string;
   };
 }
 
@@ -210,11 +205,11 @@ type StreamOnlineType = {
 };
 type MessageBusKey = keyof MessageBusEventType;
 type OnlineKey = keyof StreamOnlineType;
-type EventKey = keyof EventTypeMap | ChatMessageKey | MessageBusKey | OnlineKey;
+type EventKey = keyof EventTypeMap | IRCMessageKey | MessageBusKey | OnlineKey;
 type TypeFromKey<Key extends EventKey> = Key extends keyof EventTypeMap
   ? TauMessage<EventTypeMap[Key], Key>
-  : Key extends ChatMessageKey
-  ? ChatMessage
+  : Key extends IRCMessageKey
+  ? IRCMessage
   : Key extends MessageBusKey
   ? MessageBusEvent<Key, MessageBusEventType[Key]>
   : Key extends OnlineKey

@@ -14,9 +14,16 @@ export const setupChatAlerts = () => {
       height: size,
     })();
 
-  $.listen("chat-message", async (e) => {
-    const { data } = e.detail;
-    if (data["message-text"].startsWith("!")) {
+  $.listen("irc-message", async (e) => {
+    const data = e.detail;
+    if (data.command !== "PRIVMSG") {
+      return;
+    }
+    if (!data.tags) {
+      return;
+    }
+    const messageText = data.sections.slice(1).join(" ").slice(1);
+    if (messageText.startsWith("!")) {
       return;
     }
     if (data.tags["display-name"] === "goodcop_") {
@@ -28,16 +35,19 @@ export const setupChatAlerts = () => {
       )
       .flat();
     emotes.sort((a, b) => b.end - a.end);
-    const msgText = data["message-text"];
     let msgSliced: Array<string | Node> = [];
-    let end = msgText.length;
+    let end = messageText.length;
     emotes.forEach((emote) => {
-      msgSliced.push(msgText.slice(emote.end + 1, end));
+      msgSliced.push(
+        Array.from(messageText)
+          .slice(emote.end + 1, end)
+          .join("")
+      );
       end = emote.start;
       msgSliced.push(
         twitchEmote(
           emote.id,
-          data.tags["emote-only"] === "1" && position === "side"
+          data.tags!["emote-only"] === "1" && position === "side"
             ? emotes.length === 1
               ? 90
               : 50
@@ -45,7 +55,7 @@ export const setupChatAlerts = () => {
         )
       );
     });
-    msgSliced.push(msgText.slice(0, end));
+    msgSliced.push(Array.from(messageText).slice(0, end).join(""));
     msgSliced.reverse();
 
     if (data.tags.bits) {
