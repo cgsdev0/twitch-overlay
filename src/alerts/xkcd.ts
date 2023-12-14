@@ -17,12 +17,17 @@ export interface XkcdDescription {
 export const setupXkcdAlerts = () => {
   // https://corsproxy.io/?https://xkcd.com/1000/info.0.json
 
-  $.listen("chat-message", async (e) => {
-    const { data } = e.detail;
+  $.listen("irc-message", async (e) => {
+    const data = e.detail;
 
-    const match = data["message-text"].match(
-      /https:\/\/xkcd\.com\/(?:([0-9]+)\/)?/
-    );
+    if (data.command !== "PRIVMSG") {
+      return;
+    }
+    if (!data.tags) {
+      return;
+    }
+    const messageText = data.sections.slice(1).join(" ").slice(1);
+    const match = messageText.match(/https:\/\/xkcd\.com\/(?:([0-9]+)\/)?/);
     if (match) {
       const num = match[1];
       let requestUrl = "https://corsproxy.io/?https://xkcd.com/";

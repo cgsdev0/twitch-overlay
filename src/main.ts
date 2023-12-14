@@ -31,6 +31,7 @@ import { setupArena } from "./alerts/arena";
 if (window.location.pathname === "/") {
   setupWebsocket();
   setupMessageBrokerWebsocket();
+  setupChatWebsocket();
 
   // Alerts
   setupSubAlerts();
@@ -39,11 +40,11 @@ if (window.location.pathname === "/") {
   setupFollowAlerts();
   setupCheerAlerts();
   setupFishAlerts();
-  setupXkcdAlerts();
   // setupSubGoalAlerts();
   setupFollowGoalAlerts();
   setupSpotifyAlerts();
   setupWheel();
+  setupXkcdAlerts();
 } else if (window.location.pathname === "/chat") {
   setupChatWebsocket();
   setupChatAlerts();
