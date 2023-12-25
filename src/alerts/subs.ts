@@ -108,8 +108,32 @@ export const setupSubAlerts = () => {
     catchSubscriber(e);
   });
 
-  $.listen("channel-subscribe", (e) => {
-    if (!e.detail.event_data.is_gift) return;
-    catchSubscriber(e);
-  });
+  // const banned = [
+  //   "she",
+  //   "her",
+  //   "girl",
+  //   "man",
+  //   "ugly",
+  //   "woman",
+  //   "gender",
+  //   "cop",
+  //   "suck",
+  //   "boob",
+  //   "tit",
+  //   "fk",
+  //   "you",
+  //   "cop",
+  //   "him",
+  //   "his",
+  // ];
+  // $.listen("channel-subscribe", (e) => {
+  //   if (!e.detail.event_data.is_gift) return;
+  //   if (
+  //     banned.some((word: string) =>
+  //       e.detail.event_data.user_login.toLowerCase().includes(word)
+  //     )
+  //   )
+  //     return;
+  //   catchSubscriber(e);
+  // });
 };
