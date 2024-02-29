@@ -4,11 +4,11 @@ import type * as CSS from "csstype";
 type NodeArray = Parameters<ParentNode["append"]>;
 const builder =
   <T extends keyof HTMLElementTagNameMap>(type: T) =>
-  (...that: NodeArray) => {
-    const newEl = document.createElement(type);
-    newEl.append(...that);
-    return newEl;
-  };
+    (...that: NodeArray) => {
+      const newEl = document.createElement(type);
+      newEl.append(...that);
+      return newEl;
+    };
 
 const builderNames = [
   "header",
@@ -36,49 +36,49 @@ type Attributes = Record<string, string | number | undefined>;
 type Constraint = ReturnType<typeof builder>;
 export const attr =
   <T extends Constraint>(base: T) =>
-  (attributes: Attributes, ...that: NodeArray) => {
-    const el = base(...that);
-    Object.entries(attributes).forEach(([attr, val]) => {
-      if (typeof val === "undefined") return;
-      if (typeof val === "number") {
-        el.setAttribute(attr, val.toString());
-      } else {
-        el.setAttribute(attr, val);
-      }
-    });
-    return el as ReturnType<T>;
-  };
+    (attributes: Attributes, ...that: NodeArray) => {
+      const el = base(...that);
+      Object.entries(attributes).forEach(([attr, val]) => {
+        if (typeof val === "undefined") return;
+        if (typeof val === "number") {
+          el.setAttribute(attr, val.toString());
+        } else {
+          el.setAttribute(attr, val);
+        }
+      });
+      return el as ReturnType<T>;
+    };
 export const wattr =
   <T extends Constraint>(base: T, attributes: Attributes) =>
-  (...that: NodeArray) => {
-    const el = base(...that);
-    Object.entries(attributes).forEach(([attr, val]) => {
-      if (typeof val === "undefined") return;
-      if (typeof val === "number") {
-        el.setAttribute(attr, val.toString());
-      } else {
-        el.setAttribute(attr, val);
-      }
-    });
-    return el as ReturnType<T>;
-  };
+    (...that: NodeArray) => {
+      const el = base(...that);
+      Object.entries(attributes).forEach(([attr, val]) => {
+        if (typeof val === "undefined") return;
+        if (typeof val === "number") {
+          el.setAttribute(attr, val.toString());
+        } else {
+          el.setAttribute(attr, val);
+        }
+      });
+      return el as ReturnType<T>;
+    };
 export const className =
   <T extends Constraint>(base: T, className: string) =>
-  (...that: NodeArray) => {
-    const el = base(...that);
-    el.className = className;
-    return el as ReturnType<T>;
-  };
+    (...that: NodeArray) => {
+      const el = base(...that);
+      el.className = className;
+      return el as ReturnType<T>;
+    };
 
 export const slideUp =
   <T extends Constraint>(base: T) =>
-  (...that: NodeArray) => {
-    const el = base(...that);
-    el.classList.add("slide-up-trigger");
-    el.classList.add("slide-up");
-    setTimeout(() => el.classList.remove("slide-up-trigger"), 1);
-    return el as ReturnType<T>;
-  };
+    (...that: NodeArray) => {
+      const el = base(...that);
+      el.classList.add("slide-up-trigger");
+      el.classList.add("slide-up");
+      setTimeout(() => el.classList.remove("slide-up-trigger"), 1);
+      return el as ReturnType<T>;
+    };
 
 export const expire = <T extends ReturnType<Constraint>>(
   after: number,
@@ -180,6 +180,7 @@ type MessageBusEventType = {
   "wheel-show": {};
   "fish-catch": {
     fish: string;
+    id: number;
     classification: Classification;
     caught_by: string;
   };

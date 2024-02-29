@@ -18,6 +18,7 @@
     /* pushes the sun down past the viewport */
     transform: translateY(0px);
   }
+
   to {
     /* returns the sun to its default position */
     transform: translateY(-14px);
@@ -49,6 +50,7 @@ canvas#wheel {
   left: 140px;
   top: 100px;
 }
+
 body {
   margin: 0;
   padding: 0;
@@ -57,7 +59,7 @@ body {
   width: 100vw;
 }
 
-body > div {
+body>div {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -67,7 +69,7 @@ body > div {
   left: 0;
 }
 
-body > div#xkcd {
+body>div#xkcd {
   width: 100%;
   height: 100%;
   display: flex;
@@ -76,7 +78,7 @@ body > div#xkcd {
   align-items: flex-end;
 }
 
-#xkcd > img {
+#xkcd>img {
   margin-right: 80px;
   object-fit: contain;
   object-position: 100% 0;
@@ -88,6 +90,7 @@ body > div#xkcd {
   0% {
     opacity: 0%;
   }
+
   100% {
     opacity: 100%;
   }
@@ -97,6 +100,7 @@ body > div#xkcd {
   0% {
     opacity: 100%;
   }
+
   100% {
     opacity: 0%;
   }
@@ -106,6 +110,7 @@ body > div#xkcd {
   0% {
     transform: scale(200%) translate(65px, -800px);
   }
+
   100% {
     transform: scale(200%) translate(65px, 40px);
   }
@@ -116,11 +121,13 @@ body > div#xkcd {
     margin-top: 0px;
     opacity: 100%;
   }
+
   100% {
     margin-top: -110px;
     opacity: 0%;
   }
 }
+
 div.follow.go_away {
   animation: slide_out_follow 0.5s forwards;
 }
@@ -167,18 +174,16 @@ div.follow {
   width: 201px;
   height: 110px;
 
-  background: linear-gradient(
-    180deg,
-    #d0e4fb 0%,
-    #cee3f9 12.5%,
-    #d1e6f9 25%,
-    #d5e9fa 36.46%,
-    #ddecfb 50%,
-    #e3f1fd 63.54%,
-    #e9f6fe 76.56%,
-    #e9f7ff 88.54%,
-    #e4f4ff 100%
-  );
+  background: linear-gradient(180deg,
+      #d0e4fb 0%,
+      #cee3f9 12.5%,
+      #d1e6f9 25%,
+      #d5e9fa 36.46%,
+      #ddecfb 50%,
+      #e3f1fd 63.54%,
+      #e9f6fe 76.56%,
+      #e9f7ff 88.54%,
+      #e4f4ff 100%);
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.9), inset 1px 1px 0px #ffffff,
     inset -1px -1px 0px rgba(97, 211, 244, 0.8);
   border-radius: 6px;
@@ -243,6 +248,7 @@ div.follow .user section img:first-child {
   height: 56px;
   width: 56px;
 }
+
 div.follow .user section img:last-child {
   position: absolute;
   top: 5px;
@@ -366,13 +372,16 @@ p.subscribe {
   40% {
     opacity: 0%;
   }
+
   45% {
     opacity: 100%;
   }
+
   90% {
     transform: translateY(0);
     opacity: 100%;
   }
+
   100% {
     transform: translateY(-100px);
     opacity: 0%;
@@ -405,22 +414,23 @@ div.subscribe.swim-away {
   0% {
     transform: translate(0px, 0px) rotate(0deg) scale(6) scaleX(-1);
   }
+
   20% {
-    transform: translate(calc(1600px * 0.2 * 0.2), 0px) rotate(10deg) scale(6)
-      scaleX(-1);
+    transform: translate(calc(1600px * 0.2 * 0.2), 0px) rotate(10deg) scale(6) scaleX(-1);
   }
+
   40% {
-    transform: translate(calc(1600px * 0.4 * 0.4), 0px) rotate(-10deg) scale(6)
-      scaleX(-1);
+    transform: translate(calc(1600px * 0.4 * 0.4), 0px) rotate(-10deg) scale(6) scaleX(-1);
   }
+
   60% {
-    transform: translate(calc(1600px * 0.6 * 0.6), 0px) rotate(10deg) scale(6)
-      scaleX(-1);
+    transform: translate(calc(1600px * 0.6 * 0.6), 0px) rotate(10deg) scale(6) scaleX(-1);
   }
+
   80% {
-    transform: translate(calc(1600px * 0.8 * 0.8), 0px) rotate(-10deg) scale(6)
-      scaleX(-1);
+    transform: translate(calc(1600px * 0.8 * 0.8), 0px) rotate(-10deg) scale(6) scaleX(-1);
   }
+
   100% {
     transform: translate(1600px, 0px) rotate(10deg) scale(6) scaleX(-1);
   }
@@ -430,22 +440,28 @@ div.subscribe.swim-away {
   0% {
     transform: translate(0px, 1000px) rotate(-180deg) scale(6) scaleX(-1);
   }
+
   20% {
     transform: translate(0px, 800px) rotate(0deg) scale(6) scaleX(-1);
   }
+
   40% {
     transform: translate(0px, 600px) rotate(180deg) scale(6) scaleX(-1);
   }
+
   60% {
     transform: translate(0px, 400px) rotate(360deg) scale(6) scaleX(-1);
   }
+
   80% {
     transform: translate(0px, 200px) rotate(540deg) scale(6) scaleX(-1);
   }
+
   100% {
     transform: translate(0px, 0px) rotate(720deg) scale(6) scaleX(-1);
   }
 }
+
 .fisher {
   width: 800px;
   height: 800px;
@@ -458,6 +474,7 @@ div.subscribe.swim-away {
 .reeling {
   animation: fisherCatch 1.5s forwards;
 }
+
 .unreeling {
   animation: fisherGoAway 1s forwards;
 }
@@ -466,27 +483,34 @@ div.subscribe.swim-away {
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: translate(1000px, 0px);
   }
 }
+
 @keyframes fisherCatch {
   0% {
     transform: translate(1000px, 0px);
   }
+
   50% {
     transform: translate(0, 0px);
   }
+
   60% {
     transform: translate(0, 0px);
   }
+
   80% {
     transform: translate(-80px, 100px) rotate(-30deg);
   }
+
   100% {
     transform: rotate(0deg);
   }
 }
+
 div.gift {
   background-color: purple;
 }
@@ -495,23 +519,32 @@ div.gift {
   0% {
     transform: translate(200px, 250px) rotate(90deg);
   }
+
   50% {
     transform: translate(0, -300px);
   }
+
   100% {
     transform: translate(-200px, 250px) rotate(-90deg);
   }
 }
+
 #pond {
   align-items: center;
   justify-content: flex-end;
 }
+
 #pond img {
   animation: fishJump 1.4s ease-in-out 0s 1 forwards;
   object-fit: cover;
   width: 250px;
   height: 250px;
 }
+
+.newfish {
+  image-rendering: pixelated;
+}
+
 #cheer {
   align-items: center;
   margin-top: 360px;
@@ -520,6 +553,7 @@ div.gift {
 #spotify {
   justify-content: flex-end;
 }
+
 #spotify .toast {
   margin: 40px;
   background-color: #181818;
@@ -533,6 +567,7 @@ div.gift {
   align-items: center;
   gap: 24px;
 }
+
 #spotify .bars {
   position: relative;
   display: flex;
@@ -540,30 +575,38 @@ div.gift {
   width: 21px;
   height: 26px;
 }
+
 #spotify .hide {
   transform: translateY(300px);
 }
+
 @keyframes bounce {
   10% {
-    transform: scaleY(0.3); /* start by scaling to 30% */
+    transform: scaleY(0.3);
+    /* start by scaling to 30% */
   }
 
   30% {
-    transform: scaleY(1); /* scale up to 100% */
+    transform: scaleY(1);
+    /* scale up to 100% */
   }
 
   60% {
-    transform: scaleY(0.5); /* scale down to 50% */
+    transform: scaleY(0.5);
+    /* scale down to 50% */
   }
 
   80% {
-    transform: scaleY(0.75); /* scale up to 75% */
+    transform: scaleY(0.75);
+    /* scale up to 75% */
   }
 
   100% {
-    transform: scaleY(0.6); /* scale down to 60% */
+    transform: scaleY(0.6);
+    /* scale down to 60% */
   }
 }
+
 #spotify .bars span {
   width: 5px;
   height: 100%;
@@ -575,29 +618,35 @@ div.gift {
 }
 
 #spotify .bars span:nth-of-type(2) {
-  animation-delay: -2.2s; /* Start at the end of animation */
+  animation-delay: -2.2s;
+  /* Start at the end of animation */
 }
 
 #spotify .bars span:nth-of-type(3) {
-  animation-delay: -3.7s; /* Start mid-way of return of animation */
+  animation-delay: -3.7s;
+  /* Start mid-way of return of animation */
 }
 
 #spotify .song {
   font-size: 16pt;
 }
+
 #spotify .artist {
   color: #ccc;
   font-size: 12pt;
 }
+
 #spotify .album {
   border-radius: 10px;
   object-fit: contain;
   max-height: 80%;
   width: auto;
 }
+
 #goal {
   align-items: flex-end;
 }
+
 .follow-goal-container {
   width: 100vw;
   height: 120px;
@@ -615,6 +664,7 @@ div.gift {
   line-height: 29px;
   font-size: 16pt;
 }
+
 .follow-goal-container .progress-bar p {
   position: absolute;
   top: 0;
@@ -624,6 +674,7 @@ div.gift {
   z-index: 1000;
   color: black;
 }
+
 .follow-goal-container .progress-bar-inner {
   background-color: white;
   height: calc(100% - 4px);
@@ -633,6 +684,7 @@ div.gift {
   text-align: center;
   transition: width 1s;
 }
+
 #follow-goal .hide {
   transform: translateY(-31px);
   opacity: 40%;
@@ -649,11 +701,13 @@ div.gift {
   color: black;
   padding: 12px 20px;
 }
+
 .goal-container h1 {
   margin: 0;
   font-size: 32pt;
   font-weight: normal;
 }
+
 .goal-container .progress-bar {
   background-color: #446088;
   height: 50px;
@@ -661,6 +715,7 @@ div.gift {
   border-radius: 12px;
   position: relative;
 }
+
 .goal-container .progress-bar p {
   position: absolute;
   top: 0;
@@ -670,6 +725,7 @@ div.gift {
   z-index: 1000;
   color: black;
 }
+
 .goal-container .progress-bar-inner {
   background-color: white;
   height: calc(100% - 4px);
@@ -679,6 +735,7 @@ div.gift {
   text-align: center;
   transition: width 1s;
 }
+
 #goal .hide {
   transform: translateX(600px);
 }
@@ -689,17 +746,16 @@ div.gift {
   padding: 8px 0px;
   justify-content: flex-end;
   align-items: flex-end;
-  -webkit-mask-image: linear-gradient(
-    to bottom,
-    transparent,
-    transparent 0px,
-    black 32px,
-    black calc(100%)
-  );
+  -webkit-mask-image: linear-gradient(to bottom,
+      transparent,
+      transparent 0px,
+      black 32px,
+      black calc(100%));
   -webkit-mask-size: 100% 100%;
   -webkit-mask-position: 0 0, 100% 0;
   -webkit-mask-repeat: no-repeat, no-repeat;
 }
+
 #chat-side {
   gap: 0.5em;
   --from-bottom: 460px;
@@ -710,17 +766,16 @@ div.gift {
   height: calc(100% - var(--from-bottom));
   justify-content: flex-end;
   align-items: flex-end;
-  -webkit-mask-image: linear-gradient(
-    to bottom,
-    transparent,
-    transparent 27px,
-    black 63px,
-    black calc(100%)
-  );
+  -webkit-mask-image: linear-gradient(to bottom,
+      transparent,
+      transparent 27px,
+      black 63px,
+      black calc(100%));
   -webkit-mask-size: 100% 100%;
   -webkit-mask-position: 0 0, 100% 0;
   -webkit-mask-repeat: no-repeat, no-repeat;
 }
+
 .chat-msg-bottom {
   flex-direction: row;
   display: flex;
@@ -730,6 +785,7 @@ div.gift {
   line-height: 31px;
   color: white;
 }
+
 .chat-msg-side {
   flex-shrink: 0;
   opacity: 0.8;
@@ -746,12 +802,15 @@ div.gift {
   text-transform: lowercase;
   box-shadow: 0px 0px 42px 10px #00000063;
 }
+
 .chat-msg-bottom .username {
   font-weight: bold;
 }
+
 .chat-msg-bottom .msg:before {
   content: ":\00a0";
 }
+
 .chat-msg-side .username {
   font-weight: bold;
 }
@@ -793,6 +852,7 @@ div.gift {
 .slide-up {
   transition: all 1s ease-out, opacity 0.5s ease-out;
 }
+
 .slide-up-trigger {
   min-height: 0px;
   max-height: 0px;
@@ -819,6 +879,7 @@ div.gift {
 #arena .fighter .fishBowl {
   position: relative;
 }
+
 #arena .fighter .fishBowl .winStreak {
   position: absolute;
   top: 0;
@@ -838,9 +899,11 @@ div.gift {
   animation: marker 1s forwards;
   z-index: 100;
 }
+
 #arena .fighter:nth-of-type(2) .fishBowl .hitMarker {
   transform: scaleX(-1);
 }
+
 @keyframes marker {
   0% {
     opacity: 100%;
@@ -850,6 +913,7 @@ div.gift {
   50% {
     opacity: 100%;
   }
+
   100% {
     opacity: 0%;
     top: 0px;
@@ -860,6 +924,7 @@ div.gift {
   0% {
     transform: translateX(-600px);
   }
+
   100% {
     transform: translateX(0px);
   }
@@ -931,9 +996,11 @@ div.gift {
   0% {
     transform: translateY(0px);
   }
+
   100% {
     transform: translateY(400px) rotate(7deg);
   }
+
   5% {
     transform: translateY(-20px);
   }
@@ -944,26 +1011,33 @@ div.gift {
     transform: translateX(0px);
     filter: brightness(1);
   }
+
   100% {
     transform: translateX(0px);
   }
+
   10% {
     transform: translateX(20px);
     filter: brightness(10);
   }
+
   40% {
     filter: brightness(1);
   }
 }
+
 @keyframes critical {
+
   0%,
   100% {
     transform: translateX(0px);
   }
+
   20%,
   40% {
     transform: translateX(-50px);
   }
+
   10%,
   30%,
   50% {
@@ -972,10 +1046,12 @@ div.gift {
 }
 
 @keyframes battle {
+
   0%,
   100% {
     transform: translateX(0px);
   }
+
   30% {
     transform: translateX(-80px);
   }

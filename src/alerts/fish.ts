@@ -2,11 +2,16 @@ import { $ } from "dom";
 import { enqueueAlert } from "../queue";
 import { sendFishToArena } from "./arena";
 
-const fishImgUrl = (fish: string) => {
-  return `/fish/${encodeURIComponent(fish.toLowerCase())}.png`;
+const fishImgUrl = (fish_id: number, fish: string) => {
+  if (fish_id >= 5000) {
+    // legacy fish
+    return `/fish/${encodeURIComponent(fish.toLowerCase())}.png`;
+  }
+  return `/newfish/spr_fish_${fish_id}_x.png`;
 };
-export const fishImg = (fish: string) =>
-  $.wattr($.img, { src: fishImgUrl(fish) })();
+
+export const fishImg = (fish_id: number, fish: string) =>
+  $.wattr($.img, { src: fishImgUrl(fish_id, fish), class: fish_id < 5000 ? "newfish" : undefined })();
 
 export const setupFishAlerts = () => {
   const plop = new Audio("/sounds/fish_plop.mp3");
@@ -22,7 +27,7 @@ export const setupFishAlerts = () => {
     const { data } = e.detail;
     const fish = data.fish.toLowerCase();
     const classification = data.classification.toLowerCase();
-    const f = fishImg(fish);
+    const f = fishImg(data.id, fish);
     enqueueAlert("fish", {
       element: f,
       onShow: () =>
@@ -31,8 +36,8 @@ export const setupFishAlerts = () => {
             fish === "{null}fish"
               ? nullfish.play()
               : classification === "legendary"
-              ? legendary.play()
-              : plop.play(),
+                ? legendary.play()
+                : plop.play(),
           100
         ),
       destination: "#pond",

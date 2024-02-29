@@ -25,17 +25,17 @@ export const setupArena = () => {
   if (loaded) {
     const oldQueue = JSON.parse(loaded) as ReturnType<typeof serializableQueue>;
     oldQueue.forEach((e) => {
-      const { fishType, stats, caughtBy } = e;
-      sendFighterToArena(fishImg(fishType), fishType, stats, caughtBy);
+      const { fishType, stats, caughtBy, fishId } = e;
+      sendFighterToArena(fishImg(fishId || 5000, fishType), fishType, fishId || 5000, stats, caughtBy);
     });
   }
 
   $.listen("fish-catch", (e) => {
     const { data } = e.detail;
     const fish = data.fish.toLowerCase();
-    const f = fishImg(fish);
+    const f = fishImg(data.id, fish);
     setTimeout(() => {
-      sendFishToArena(f, fish, data.classification, data.caught_by);
+      sendFishToArena(f, fish, data.id, data.classification, data.caught_by);
     }, 3000);
   });
 };
@@ -97,14 +97,16 @@ interface Fighter {
   stats: Stats;
   caughtBy: string;
   fishType: string;
+  fishId: number;
 }
 const battleQueue: Fighter[] = [];
 
 const serializableQueue = () =>
-  battleQueue.map(({ stats, fishType, caughtBy }) => ({
+  battleQueue.map(({ stats, fishType, caughtBy, fishId }) => ({
     stats,
     fishType,
     caughtBy,
+    fishId,
   }));
 
 const save = () => {
@@ -141,16 +143,18 @@ const rollDmg = (stats: Stats) =>
 export const sendFishToArena = (
   fish: Element,
   fishType: string,
+  fishId: number,
   classification: Classification,
   caughtBy: string
 ) => {
   const stats = rollStats(classification);
-  sendFighterToArena(fish, fishType, stats, caughtBy);
+  sendFighterToArena(fish, fishType, fishId, stats, caughtBy);
 };
 
 export const sendFighterToArena = (
   fish: Element,
   fishType: string,
+  fishId: number,
   stats: Stats,
   caughtBy: string
 ) => {
@@ -185,9 +189,8 @@ export const sendFighterToArena = (
     const isFatality = stats.hp === stats.maxHp && dmg >= stats.hp;
     stats.hp -= dmg;
     save();
-    (f.querySelector(".healthInner")! as HTMLElement).style.width = `${
-      Math.max(0.0, stats.hp / stats.maxHp) * 100
-    }%`;
+    (f.querySelector(".healthInner")! as HTMLElement).style.width = `${Math.max(0.0, stats.hp / stats.maxHp) * 100
+      }%`;
     if (dmg <= 0.0 || !who) {
       return;
     }
@@ -255,13 +258,13 @@ export const sendFighterToArena = (
     dealDmg,
     heal,
     fishType,
+    fishId,
   };
   if (stats.wins) {
     f.querySelector(".winStreak")!.innerHTML = `${stats.wins}x wins`;
   }
-  (f.querySelector(".healthInner")! as HTMLElement).style.width = `${
-    Math.max(0.0, stats.hp / stats.maxHp) * 100
-  }%`;
+  (f.querySelector(".healthInner")! as HTMLElement).style.width = `${Math.max(0.0, stats.hp / stats.maxHp) * 100
+    }%`;
   battleQueue.push(challenger);
   save();
   if (battleQueue.length === 2) {
