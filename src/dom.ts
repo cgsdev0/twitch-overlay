@@ -162,6 +162,13 @@ type MessageBusEvent<K, T> = {
   data: T;
 };
 
+export interface FishStats {
+  speed: number;
+  hp: number;
+  baseDmg: number;
+  varDmg: number;
+}
+
 export type Classification =
   | "common"
   | "fairly_common"
@@ -181,6 +188,7 @@ type MessageBusEventType = {
   "fish-catch": {
     fish: string;
     id: number;
+    stats: FishStats;
     classification: Classification;
     caught_by: string;
   };

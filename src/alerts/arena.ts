@@ -1,4 +1,4 @@
-import { $, Classification } from "dom";
+import { $, Classification, FishStats } from "dom";
 import { arenaConfetti } from "./confetti";
 import { fishImg } from "./fish";
 
@@ -13,8 +13,12 @@ const hitMarker = $.className($.div, "hitMarker");
 
 const healthbar = () => healthOuter(healthInner());
 
-type StatsGenerator = () => Omit<Stats, "maxHp" | "wins" | "originalHp">;
-type LootTable = { [K in Classification]: StatsGenerator };
+interface Stats extends FishStats {
+  wins: number;
+  maxHp: number;
+  originalHp: number;
+  classification: Classification;
+}
 
 let fatality: HTMLAudioElement | undefined;
 
@@ -35,59 +39,10 @@ export const setupArena = () => {
     const fish = data.fish.toLowerCase();
     const f = fishImg(data.id, fish);
     setTimeout(() => {
-      sendFishToArena(f, fish, data.id, data.classification, data.caught_by);
+      sendFishToArena(f, fish, data.id, data.classification, data.caught_by, data.stats);
     }, 3000);
   });
 };
-const commons: StatsGenerator = () => ({
-  speed: d(20),
-  hp: 10 + d(8, 2),
-  baseDmg: d(6),
-  varDmg: d(4),
-});
-
-const rares: StatsGenerator = () => ({
-  speed: d(20) + 1,
-  hp: 10 + d(10, 2) + d(6),
-  baseDmg: d(6) + 1,
-  varDmg: d(4),
-});
-
-const classModifiers: LootTable = {
-  common: commons,
-  fairly_common: commons,
-  uncommon: commons,
-  scarce: rares,
-  rare: rares,
-  epic: () => ({
-    speed: d(20) + 2,
-    hp: 10 + d(10, 2) + d(6),
-    baseDmg: d(8) + 2,
-    varDmg: d(6),
-  }),
-  legendary: () => ({
-    speed: d(20) + 3,
-    hp: 15 + d(10, 3),
-    baseDmg: d(8) + 3,
-    varDmg: 6,
-  }),
-  null: () => ({
-    speed: 0,
-    hp: d(100),
-    baseDmg: 0,
-    varDmg: 0,
-  }),
-};
-
-interface Stats {
-  speed: number;
-  hp: number;
-  wins: number;
-  maxHp: number;
-  originalHp: number;
-  baseDmg: number;
-  varDmg: number;
-}
 
 interface Fighter {
   fish: Element;
@@ -131,24 +86,31 @@ const startCombat = () => {
 };
 const d = (n: number, c: number = 1): number =>
   (--c ? d(n, c) : 0) + Math.floor(Math.random() * n) + 1;
-const rollStats = (classification: Classification): Stats => {
-  const mods = classModifiers[classification]();
-  return { ...mods, wins: 0, maxHp: mods.hp, originalHp: mods.hp };
-};
 
 const rollDmg = (stats: Stats) =>
   (stats.wins === 0 && d(100) === 100 ? 5 : 1) *
   Math.max(1, stats.baseDmg + d(stats.varDmg));
+
+const augmentStats = (stats: FishStats, classification: Classification): Stats => {
+  return {
+    ...stats,
+    maxHp: stats.hp,
+    originalHp: stats.hp,
+    wins: 0,
+    classification,
+  }
+}
 
 export const sendFishToArena = (
   fish: Element,
   fishType: string,
   fishId: number,
   classification: Classification,
-  caughtBy: string
+  caughtBy: string,
+  stats: FishStats,
 ) => {
-  const stats = rollStats(classification);
-  sendFighterToArena(fish, fishType, fishId, stats, caughtBy);
+  const augmentedStats = augmentStats(stats, classification);
+  sendFighterToArena(fish, fishType, fishId, augmentedStats, caughtBy);
 };
 
 export const sendFighterToArena = (

@@ -5,13 +5,14 @@ import { sendFishToArena } from "./arena";
 const fishImgUrl = (fish_id: number, fish: string) => {
   if (fish_id >= 5000) {
     // legacy fish
+    console.log(`/fish/${encodeURIComponent(fish.toLowerCase())}.png`);
     return `/fish/${encodeURIComponent(fish.toLowerCase())}.png`;
   }
   return `/newfish/spr_fish_${fish_id}_x.png`;
 };
 
 export const fishImg = (fish_id: number, fish: string) =>
-  $.wattr($.img, { src: fishImgUrl(fish_id, fish), class: fish_id < 5000 ? "newfish" : undefined })();
+  $.wattr($.div, { class: "fishfighter" })($.wattr($.img, { src: fishImgUrl(fish_id, fish), class: fish_id < 5000 ? "newfish" : undefined })());
 
 export const setupFishAlerts = () => {
   const plop = new Audio("/sounds/fish_plop.mp3");

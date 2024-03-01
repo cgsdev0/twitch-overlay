@@ -542,6 +542,8 @@ div.gift {
 }
 
 .newfish {
+  object-fit: none;
+  transform: scale(4);
   image-rendering: pixelated;
 }
 
@@ -974,15 +976,15 @@ div.gift {
   border-right: 0px;
 }
 
-#arena .fighter.attacking img {
+#arena .fighter.attacking .fishfighter {
   animation: battle 0.8s forwards;
 }
 
-#arena .fighter.critical img {
+#arena .fighter.critical .fishfighter {
   animation: critical 0.8s forwards;
 }
 
-#arena .fighter.damage img {
+#arena .fighter.damage .fishfighter {
   animation: damage 0.8s forwards;
 }
 
@@ -990,7 +992,7 @@ div.gift {
   transform: scaleX(-1);
 }
 
-#arena .fighter.fainting img {
+#arena .fighter.fainting .fishfighter {
   animation: fainting 0.8s forwards ease-in;
 }
 
@@ -1000,11 +1002,11 @@ div.gift {
   }
 
   100% {
-    transform: translateY(400px) rotate(7deg);
+    transform: translateY(400px) rotate(30deg);
   }
 
-  5% {
-    transform: translateY(-20px);
+  20% {
+    transform: translateY(-40px);
   }
 }
 

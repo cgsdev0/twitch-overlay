@@ -1,7 +1,7 @@
 import confetti from "canvas-confetti";
 
 export const arenaConfetti = () => {
-  var duration = 1 * 1000;
+  var duration = 500;
   var end = Date.now() + duration;
 
   (function frame() {
@@ -13,8 +13,8 @@ export const arenaConfetti = () => {
       gravity: 1,
       angle: 270 + 30,
       scalar: 1,
-      decay: 0.92,
-      origin: { y: 0.32, x: 1.01 },
+      decay: 0.91,
+      origin: { y: 0.62, x: 1.01 },
     });
     if (Date.now() < end) {
       requestAnimationFrame(frame);
