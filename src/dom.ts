@@ -188,6 +188,7 @@ type MessageBusEventType = {
   "fish-catch": {
     fish: string;
     id: number;
+    float: string;
     stats: FishStats;
     classification: Classification;
     caught_by: string;

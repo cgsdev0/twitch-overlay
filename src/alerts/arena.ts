@@ -39,7 +39,7 @@ export const setupArena = () => {
     const fish = data.fish.toLowerCase();
     const f = fishImg(data.id, fish);
     setTimeout(() => {
-      sendFishToArena(f, fish, data.id, data.classification, data.caught_by, data.stats);
+      sendFishToArena(f, fish, data.id, data.classification, data.caught_by, data.stats, data.float);
     }, 3000);
   });
 };
@@ -108,9 +108,10 @@ export const sendFishToArena = (
   classification: Classification,
   caughtBy: string,
   stats: FishStats,
+  float: string,
 ) => {
   const augmentedStats = augmentStats(stats, classification);
-  sendFighterToArena(fish, fishType, fishId, augmentedStats, caughtBy);
+  sendFighterToArena(fish, fishType, fishId, augmentedStats, caughtBy, float);
 };
 
 export const sendFighterToArena = (
@@ -118,7 +119,8 @@ export const sendFighterToArena = (
   fishType: string,
   fishId: number,
   stats: Stats,
-  caughtBy: string
+  caughtBy: string,
+  float: string,
 ) => {
   const f = fighter(
     fishBowl(winStreak(), fish),
@@ -169,11 +171,11 @@ export const sendFighterToArena = (
       setTimeout(() => {
         if (stats.wins >= 10) {
           arenaConfetti();
-          const event = new CustomEvent("fish-champion", {
-            detail: { stats, caughtBy, fishType },
-          });
-          document.dispatchEvent(event);
         }
+        const event = new CustomEvent("fish-champion", {
+          detail: { stats, caughtBy, fishType, fishId, float },
+        });
+        document.dispatchEvent(event);
         f.classList.remove("damage");
         f.classList.add("fainting");
         setTimeout(() => {
