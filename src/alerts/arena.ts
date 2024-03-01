@@ -29,8 +29,8 @@ export const setupArena = () => {
   if (loaded) {
     const oldQueue = JSON.parse(loaded) as ReturnType<typeof serializableQueue>;
     oldQueue.forEach((e) => {
-      const { fishType, stats, caughtBy, fishId } = e;
-      sendFighterToArena(fishImg(fishId || 5000, fishType), fishType, fishId || 5000, stats, caughtBy);
+      const { fishType, stats, caughtBy, fishId, float } = e;
+      sendFighterToArena(fishImg(fishId || 5000, fishType), fishType, fishId || 5000, stats, caughtBy, float || "0");
     });
   }
 
@@ -53,15 +53,17 @@ interface Fighter {
   caughtBy: string;
   fishType: string;
   fishId: number;
+  float: string;
 }
 const battleQueue: Fighter[] = [];
 
 const serializableQueue = () =>
-  battleQueue.map(({ stats, fishType, caughtBy, fishId }) => ({
+  battleQueue.map(({ stats, fishType, caughtBy, fishId, float }) => ({
     stats,
     fishType,
     caughtBy,
     fishId,
+    float,
   }));
 
 const save = () => {
@@ -223,6 +225,7 @@ export const sendFighterToArena = (
     heal,
     fishType,
     fishId,
+    float,
   };
   if (stats.wins) {
     f.querySelector(".winStreak")!.innerHTML = `${stats.wins}x wins`;
