@@ -2,7 +2,8 @@ type SecretType =
   | "TAU_TOKEN"
   | "SPOTIFY_CLIENT_ID"
   | "SPOTIFY_CLIENT_SECRET"
-  | "SPOTIFY_REFRESH_TOKEN";
+  | "SPOTIFY_REFRESH_TOKEN"
+  | "ELEVEN_LABS_SECRET";
 
 export const getSecret = (key: SecretType) => {
   return (
@@ -42,7 +43,7 @@ const fetchSpotifyAccessToken = async () => {
 
 let spotify_access_token: string | null = null;
 export const makeSpotifyRequest = async <T>(
-  endpoint: RelativeEndpoint
+  endpoint: RelativeEndpoint,
 ): Promise<T | null> => {
   const tryFetch = () =>
     window.fetch(`https://api.spotify.com${endpoint}`, {

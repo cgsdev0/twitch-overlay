@@ -7,7 +7,7 @@ const makeReconnectingWebsocket = (
     dontParseLmao?: boolean;
     dontAuthenticate?: boolean;
   },
-  cb?: (ws: WebSocket) => void
+  cb?: (ws: WebSocket) => void,
 ) => {
   const openSocket = () => {
     const socket = new WebSocket(uri);
@@ -17,7 +17,7 @@ const makeReconnectingWebsocket = (
         socket.send(
           JSON.stringify({
             token: getSecret("TAU_TOKEN"),
-          })
+          }),
         );
       }
     });
@@ -48,7 +48,7 @@ export const setupWebsocket = () => {
       const data = JSON.parse(e.data);
       const event = new CustomEvent(data.event_type, { detail: data });
       document.dispatchEvent(event);
-    }
+    },
   );
 };
 
@@ -72,17 +72,17 @@ export const setupMessageBrokerWebsocket = () => {
               message_type: key,
               data: e.detail,
               source: "overlay",
-            })
+            }),
           );
         };
         document.addEventListener(key, listener);
         socket.addEventListener("close", () =>
-          document.removeEventListener(key, listener)
+          document.removeEventListener(key, listener),
         );
       };
       loopback("wheel-result");
       loopback("fish-champion");
-    }
+    },
   );
 };
 
@@ -92,7 +92,6 @@ export const setupChatWebsocket = () => {
     "wss://irc-ws.chat.twitch.tv",
     (e) => {
       const data = e.data;
-      console.log(data);
       const sections = data.split(" ");
       let tags: any;
       if (sections.length && sections[0].startsWith("@")) {
@@ -135,6 +134,6 @@ export const setupChatWebsocket = () => {
         ws.send("NICK justinfan123456");
         ws.send("JOIN #badcop_");
       });
-    }
+    },
   );
 };
