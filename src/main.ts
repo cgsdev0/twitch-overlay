@@ -41,7 +41,7 @@ if (window.location.pathname === "/") {
   setupCheerAlerts();
   setupFishAlerts();
   // setupSubGoalAlerts();
-  setupFollowGoalAlerts();
+  // setupFollowGoalAlerts();
   setupSpotifyAlerts();
   setupWheel();
   setupXkcdAlerts();
