@@ -29,8 +29,16 @@ export const setupArena = () => {
   if (loaded) {
     const oldQueue = JSON.parse(loaded) as ReturnType<typeof serializableQueue>;
     oldQueue.forEach((e) => {
-      const { fishType, stats, caughtBy, fishId, float } = e;
-      sendFighterToArena(fishImg(fishId || 5000, fishType), fishType, fishId || 5000, stats, caughtBy, float || "0");
+      const { fishType, stats, caughtBy, fishId, float, twitchID } = e;
+      sendFighterToArena(
+        fishImg(fishId || 5000, fishType),
+        fishType,
+        fishId || 5000,
+        stats,
+        caughtBy,
+        float || "0",
+        twitchID,
+      );
     });
   }
 
@@ -39,7 +47,16 @@ export const setupArena = () => {
     const fish = data.fish.toLowerCase();
     const f = fishImg(data.id, fish);
     setTimeout(() => {
-      sendFishToArena(f, fish, data.id, data.classification, data.caught_by, data.stats, data.float);
+      sendFishToArena(
+        f,
+        fish,
+        data.id,
+        data.classification,
+        data.caught_by,
+        data.stats,
+        data.float,
+        data.twitch_id,
+      );
     }, 3000);
   });
 };
@@ -54,16 +71,18 @@ interface Fighter {
   fishType: string;
   fishId: number;
   float: string;
+  twitchID: number;
 }
 const battleQueue: Fighter[] = [];
 
 const serializableQueue = () =>
-  battleQueue.map(({ stats, fishType, caughtBy, fishId, float }) => ({
+  battleQueue.map(({ stats, fishType, caughtBy, fishId, float, twitchID }) => ({
     stats,
     fishType,
     caughtBy,
     fishId,
     float,
+    twitchID,
   }));
 
 const save = () => {
@@ -93,15 +112,18 @@ const rollDmg = (stats: Stats) =>
   (stats.wins === 0 && d(100) === 100 ? 5 : 1) *
   Math.max(1, stats.baseDmg + d(stats.varDmg));
 
-const augmentStats = (stats: FishStats, classification: Classification): Stats => {
+const augmentStats = (
+  stats: FishStats,
+  classification: Classification,
+): Stats => {
   return {
     ...stats,
     maxHp: stats.hp,
     originalHp: stats.hp,
     wins: 0,
     classification,
-  }
-}
+  };
+};
 
 export const sendFishToArena = (
   fish: Element,
@@ -111,9 +133,18 @@ export const sendFishToArena = (
   caughtBy: string,
   stats: FishStats,
   float: string,
+  twitchID: number,
 ) => {
   const augmentedStats = augmentStats(stats, classification);
-  sendFighterToArena(fish, fishType, fishId, augmentedStats, caughtBy, float);
+  sendFighterToArena(
+    fish,
+    fishType,
+    fishId,
+    augmentedStats,
+    caughtBy,
+    float,
+    twitchID,
+  );
 };
 
 export const sendFighterToArena = (
@@ -123,10 +154,11 @@ export const sendFighterToArena = (
   stats: Stats,
   caughtBy: string,
   float: string,
+  twitchID: number,
 ) => {
   const f = fighter(
     fishBowl(winStreak(), fish),
-    card(name(caughtBy), healthbar())
+    card(name(caughtBy), healthbar()),
   );
   $("#arena")!.append(f);
 
@@ -155,8 +187,9 @@ export const sendFighterToArena = (
     const isFatality = stats.hp === stats.maxHp && dmg >= stats.hp;
     stats.hp -= dmg;
     save();
-    (f.querySelector(".healthInner")! as HTMLElement).style.width = `${Math.max(0.0, stats.hp / stats.maxHp) * 100
-      }%`;
+    (f.querySelector(".healthInner")! as HTMLElement).style.width = `${
+      Math.max(0.0, stats.hp / stats.maxHp) * 100
+    }%`;
     if (dmg <= 0.0 || !who) {
       return;
     }
@@ -175,7 +208,7 @@ export const sendFighterToArena = (
           arenaConfetti();
         }
         const event = new CustomEvent("fish-champion", {
-          detail: { stats, caughtBy, fishType, fishId, float },
+          detail: { stats, caughtBy, fishType, fishId, float, twitchID },
         });
         document.dispatchEvent(event);
         f.classList.remove("damage");
@@ -187,9 +220,8 @@ export const sendFighterToArena = (
           f.remove();
           who.stats.wins += 1;
           who.heal();
-          who.fish.querySelector(
-            ".winStreak"
-          )!.innerHTML = `${who.stats.wins}x wins`;
+          who.fish.querySelector(".winStreak")!.innerHTML =
+            `${who.stats.wins}x wins`;
           startCombat();
         }, 1000);
       }, 500);
@@ -220,6 +252,7 @@ export const sendFighterToArena = (
     fish: f,
     attack,
     caughtBy,
+    twitchID,
     stats,
     dealDmg,
     heal,
@@ -230,8 +263,9 @@ export const sendFighterToArena = (
   if (stats.wins) {
     f.querySelector(".winStreak")!.innerHTML = `${stats.wins}x wins`;
   }
-  (f.querySelector(".healthInner")! as HTMLElement).style.width = `${Math.max(0.0, stats.hp / stats.maxHp) * 100
-    }%`;
+  (f.querySelector(".healthInner")! as HTMLElement).style.width = `${
+    Math.max(0.0, stats.hp / stats.maxHp) * 100
+  }%`;
   battleQueue.push(challenger);
   save();
   if (battleQueue.length === 2) {

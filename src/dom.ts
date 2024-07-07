@@ -4,11 +4,11 @@ import type * as CSS from "csstype";
 type NodeArray = Parameters<ParentNode["append"]>;
 const builder =
   <T extends keyof HTMLElementTagNameMap>(type: T) =>
-    (...that: NodeArray) => {
-      const newEl = document.createElement(type);
-      newEl.append(...that);
-      return newEl;
-    };
+  (...that: NodeArray) => {
+    const newEl = document.createElement(type);
+    newEl.append(...that);
+    return newEl;
+  };
 
 const builderNames = [
   "header",
@@ -36,54 +36,54 @@ type Attributes = Record<string, string | number | undefined>;
 type Constraint = ReturnType<typeof builder>;
 export const attr =
   <T extends Constraint>(base: T) =>
-    (attributes: Attributes, ...that: NodeArray) => {
-      const el = base(...that);
-      Object.entries(attributes).forEach(([attr, val]) => {
-        if (typeof val === "undefined") return;
-        if (typeof val === "number") {
-          el.setAttribute(attr, val.toString());
-        } else {
-          el.setAttribute(attr, val);
-        }
-      });
-      return el as ReturnType<T>;
-    };
+  (attributes: Attributes, ...that: NodeArray) => {
+    const el = base(...that);
+    Object.entries(attributes).forEach(([attr, val]) => {
+      if (typeof val === "undefined") return;
+      if (typeof val === "number") {
+        el.setAttribute(attr, val.toString());
+      } else {
+        el.setAttribute(attr, val);
+      }
+    });
+    return el as ReturnType<T>;
+  };
 export const wattr =
   <T extends Constraint>(base: T, attributes: Attributes) =>
-    (...that: NodeArray) => {
-      const el = base(...that);
-      Object.entries(attributes).forEach(([attr, val]) => {
-        if (typeof val === "undefined") return;
-        if (typeof val === "number") {
-          el.setAttribute(attr, val.toString());
-        } else {
-          el.setAttribute(attr, val);
-        }
-      });
-      return el as ReturnType<T>;
-    };
+  (...that: NodeArray) => {
+    const el = base(...that);
+    Object.entries(attributes).forEach(([attr, val]) => {
+      if (typeof val === "undefined") return;
+      if (typeof val === "number") {
+        el.setAttribute(attr, val.toString());
+      } else {
+        el.setAttribute(attr, val);
+      }
+    });
+    return el as ReturnType<T>;
+  };
 export const className =
   <T extends Constraint>(base: T, className: string) =>
-    (...that: NodeArray) => {
-      const el = base(...that);
-      el.className = className;
-      return el as ReturnType<T>;
-    };
+  (...that: NodeArray) => {
+    const el = base(...that);
+    el.className = className;
+    return el as ReturnType<T>;
+  };
 
 export const slideUp =
   <T extends Constraint>(base: T) =>
-    (...that: NodeArray) => {
-      const el = base(...that);
-      el.classList.add("slide-up-trigger");
-      el.classList.add("slide-up");
-      setTimeout(() => el.classList.remove("slide-up-trigger"), 1);
-      return el as ReturnType<T>;
-    };
+  (...that: NodeArray) => {
+    const el = base(...that);
+    el.classList.add("slide-up-trigger");
+    el.classList.add("slide-up");
+    setTimeout(() => el.classList.remove("slide-up-trigger"), 1);
+    return el as ReturnType<T>;
+  };
 
 export const expire = <T extends ReturnType<Constraint>>(
   after: number,
   el: T,
-  transitionOut?: string
+  transitionOut?: string,
 ) => {
   if (transitionOut) {
     setTimeout(() => {
@@ -192,6 +192,7 @@ type MessageBusEventType = {
     stats: FishStats;
     classification: Classification;
     caught_by: string;
+    twitch_id: number;
   };
 };
 type StreamOnlineType = {
@@ -219,12 +220,12 @@ type EventKey = keyof EventTypeMap | IRCMessageKey | MessageBusKey | OnlineKey;
 type TypeFromKey<Key extends EventKey> = Key extends keyof EventTypeMap
   ? TauMessage<EventTypeMap[Key], Key>
   : Key extends IRCMessageKey
-  ? IRCMessage
-  : Key extends MessageBusKey
-  ? MessageBusEvent<Key, MessageBusEventType[Key]>
-  : Key extends OnlineKey
-  ? TauMessage<StreamOnlineType[Key], Key>
-  : never;
+    ? IRCMessage
+    : Key extends MessageBusKey
+      ? MessageBusEvent<Key, MessageBusEventType[Key]>
+      : Key extends OnlineKey
+        ? TauMessage<StreamOnlineType[Key], Key>
+        : never;
 
 // REGISTER ERROR OVERLAY
 const showErrorOverlay = (err: any) => {
@@ -241,12 +242,12 @@ const showErrorOverlay = (err: any) => {
 
 window.addEventListener("error", showErrorOverlay);
 window.addEventListener("unhandledrejection", ({ reason }) =>
-  showErrorOverlay(reason)
+  showErrorOverlay(reason),
 );
 function listen<T extends EventKey>(
   key: T,
   cb: (e: CustomEvent<TypeFromKey<T>>) => void,
-  node?: HTMLElement
+  node?: HTMLElement,
 ): () => void {
   const wrapped = (e: any) => {
     try {
@@ -266,9 +267,9 @@ export const $ = Object.assign(
   Object.assign(
     (...a: Parameters<(typeof document)["querySelector"]>) =>
       document.querySelector(...a),
-    builders
+    builders,
   ),
-  { wattr, className, attr, expire, listen, styles, slideUp }
+  { wattr, className, attr, expire, listen, styles, slideUp },
 );
 
 // const container = className(wattr(div, { this: "is a test" }), "container");
