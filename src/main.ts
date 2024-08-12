@@ -17,6 +17,7 @@ import { setupXkcdAlerts } from "./alerts/xkcd";
 import { setupWheel } from "./alerts/wheel";
 import { setupPngTuber } from "./pngtuber";
 import { setupArena } from "./alerts/arena";
+import { setupLicense } from "./alerts/license";
 
 // TODO:
 // something fancy if the goal is met??
@@ -29,6 +30,7 @@ import { setupArena } from "./alerts/arena";
 
 // TODO: refactor this AWFUL router
 if (window.location.pathname === "/") {
+  setupLicense();
   setupWebsocket();
   setupMessageBrokerWebsocket();
   setupChatWebsocket();

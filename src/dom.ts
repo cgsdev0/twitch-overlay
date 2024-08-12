@@ -185,6 +185,7 @@ type MessageBusEventType = {
   };
   "wheel-spin": {};
   "wheel-show": {};
+  "new-license": { license: string };
   "fish-catch": {
     fish: string;
     id: number;

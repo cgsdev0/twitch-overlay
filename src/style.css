@@ -1,5 +1,12 @@
 :root {
-  font-family: Hack NF, Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family:
+    Hack NF,
+    Inter,
+    system-ui,
+    Avenir,
+    Helvetica,
+    Arial,
+    sans-serif;
   line-height: 1.5;
   font-weight: 400;
   font-size: 24pt;
@@ -59,7 +66,7 @@ body {
   width: 100vw;
 }
 
-body>div {
+body > div {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -69,7 +76,7 @@ body>div {
   left: 0;
 }
 
-body>div#xkcd {
+body > div#xkcd {
   width: 100%;
   height: 100%;
   display: flex;
@@ -78,7 +85,7 @@ body>div#xkcd {
   align-items: flex-end;
 }
 
-#xkcd>img {
+#xkcd > img {
   margin-right: 80px;
   object-fit: contain;
   object-position: 100% 0;
@@ -174,17 +181,21 @@ div.follow {
   width: 201px;
   height: 110px;
 
-  background: linear-gradient(180deg,
-      #d0e4fb 0%,
-      #cee3f9 12.5%,
-      #d1e6f9 25%,
-      #d5e9fa 36.46%,
-      #ddecfb 50%,
-      #e3f1fd 63.54%,
-      #e9f6fe 76.56%,
-      #e9f7ff 88.54%,
-      #e4f4ff 100%);
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.9), inset 1px 1px 0px #ffffff,
+  background: linear-gradient(
+    180deg,
+    #d0e4fb 0%,
+    #cee3f9 12.5%,
+    #d1e6f9 25%,
+    #d5e9fa 36.46%,
+    #ddecfb 50%,
+    #e3f1fd 63.54%,
+    #e9f6fe 76.56%,
+    #e9f7ff 88.54%,
+    #e4f4ff 100%
+  );
+  box-shadow:
+    0px 0px 10px rgba(0, 0, 0, 0.9),
+    inset 1px 1px 0px #ffffff,
     inset -1px -1px 0px rgba(97, 211, 244, 0.8);
   border-radius: 6px;
 }
@@ -416,19 +427,23 @@ div.subscribe.swim-away {
   }
 
   20% {
-    transform: translate(calc(1600px * 0.2 * 0.2), 0px) rotate(10deg) scale(6) scaleX(-1);
+    transform: translate(calc(1600px * 0.2 * 0.2), 0px) rotate(10deg) scale(6)
+      scaleX(-1);
   }
 
   40% {
-    transform: translate(calc(1600px * 0.4 * 0.4), 0px) rotate(-10deg) scale(6) scaleX(-1);
+    transform: translate(calc(1600px * 0.4 * 0.4), 0px) rotate(-10deg) scale(6)
+      scaleX(-1);
   }
 
   60% {
-    transform: translate(calc(1600px * 0.6 * 0.6), 0px) rotate(10deg) scale(6) scaleX(-1);
+    transform: translate(calc(1600px * 0.6 * 0.6), 0px) rotate(10deg) scale(6)
+      scaleX(-1);
   }
 
   80% {
-    transform: translate(calc(1600px * 0.8 * 0.8), 0px) rotate(-10deg) scale(6) scaleX(-1);
+    transform: translate(calc(1600px * 0.8 * 0.8), 0px) rotate(-10deg) scale(6)
+      scaleX(-1);
   }
 
   100% {
@@ -653,7 +668,9 @@ div.gift {
   width: 100vw;
   height: 120px;
   text-align: center;
-  transition: transform 1s, opacity 1s;
+  transition:
+    transform 1s,
+    opacity 1s;
   color: black;
 }
 
@@ -748,13 +765,17 @@ div.gift {
   padding: 8px 0px;
   justify-content: flex-end;
   align-items: flex-end;
-  -webkit-mask-image: linear-gradient(to bottom,
-      transparent,
-      transparent 0px,
-      black 32px,
-      black calc(100%));
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    transparent 0px,
+    black 32px,
+    black calc(100%)
+  );
   -webkit-mask-size: 100% 100%;
-  -webkit-mask-position: 0 0, 100% 0;
+  -webkit-mask-position:
+    0 0,
+    100% 0;
   -webkit-mask-repeat: no-repeat, no-repeat;
 }
 
@@ -768,13 +789,17 @@ div.gift {
   height: calc(100% - var(--from-bottom));
   justify-content: flex-end;
   align-items: flex-end;
-  -webkit-mask-image: linear-gradient(to bottom,
-      transparent,
-      transparent 27px,
-      black 63px,
-      black calc(100%));
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    transparent 27px,
+    black 63px,
+    black calc(100%)
+  );
   -webkit-mask-size: 100% 100%;
-  -webkit-mask-position: 0 0, 100% 0;
+  -webkit-mask-position:
+    0 0,
+    100% 0;
   -webkit-mask-repeat: no-repeat, no-repeat;
 }
 
@@ -852,7 +877,9 @@ div.gift {
 }
 
 .slide-up {
-  transition: all 1s ease-out, opacity 0.5s ease-out;
+  transition:
+    all 1s ease-out,
+    opacity 0.5s ease-out;
 }
 
 .slide-up-trigger {
@@ -875,7 +902,9 @@ div.gift {
   justify-content: space-between;
   width: 100%;
   animation: fighterSlide 1s forwards ease-out;
-  transition: top 1s, flex-direction 1s;
+  transition:
+    top 1s,
+    flex-direction 1s;
 }
 
 #arena .fighter .fishBowl {
@@ -885,7 +914,15 @@ div.gift {
 #arena .fighter .fishBowl .winStreak {
   position: absolute;
   z-index: 9999;
-  text-shadow: 2px 2px 0 black, 2px -2px 0 black, -2px 2px 0 black, -2px -2px 0 black, 2px 0px 0 black, 0px 2px 0 black, -2px 0px 0 black, 0px -2px 0 black;
+  text-shadow:
+    2px 2px 0 black,
+    2px -2px 0 black,
+    -2px 2px 0 black,
+    -2px -2px 0 black,
+    2px 0px 0 black,
+    0px 2px 0 black,
+    -2px 0px 0 black,
+    0px -2px 0 black;
   top: 0;
   left: 0;
   width: 100%;
@@ -1031,7 +1068,6 @@ div.gift {
 }
 
 @keyframes critical {
-
   0%,
   100% {
     transform: translateX(0px);
@@ -1050,7 +1086,6 @@ div.gift {
 }
 
 @keyframes battle {
-
   0%,
   100% {
     transform: translateX(0px);
@@ -1072,4 +1107,49 @@ div.gift {
   align-self: flex-end;
   border-top: 0px;
   border-left: 0px;
+}
+
+@keyframes scroll-left {
+  0% {
+    transform: translateX(40%);
+    opacity: 0;
+  }
+  5%,
+  40%,
+  60%,
+  95% {
+    opacity: 0;
+  }
+  25%,
+  75% {
+    opacity: 1;
+  }
+  50% {
+    transform: translateX(-40%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(40%);
+    opacity: 0;
+  }
+}
+
+#license div {
+  position: absolute;
+  right: 15px;
+  top: 320px;
+  opacity: 0.5;
+  width: 480px;
+  text-align: center;
+  overflow: hidden;
+}
+
+#license div p:first-child {
+  font-size: 0.8em;
+}
+
+#license div p:last-child {
+  animation: scroll-left 16s linear infinite;
+  font-size: 1.6em;
+  font-weight: bold;
 }
