@@ -1,5 +1,9 @@
 import { $, TauMessage } from "dom";
-import { ChannelSubscriptionMessage, ChannelSubscribe } from "tau-types";
+import {
+  ChannelSubscriptionMessage,
+  ChannelSubscribe,
+  ChannelSubscriptionGift,
+} from "tau-types";
 import { makeHelixRequest } from "../auth";
 import { getDominantColors, pickPaletteColor } from "../colors";
 import { enqueueAlert } from "../queue";
@@ -46,14 +50,17 @@ export const setupSubAlerts = () => {
     T extends
       | CustomEvent<TauMessage<ChannelSubscribe, "channel-subscribe">>
       | CustomEvent<
-          TauMessage<ChannelSubscriptionMessage, "channel-subscription-message">
+          TauMessage<ChannelSubscriptionGift, "channel-subscription-gift">
         >
+      | CustomEvent<
+          TauMessage<ChannelSubscriptionMessage, "channel-subscription-message">
+        >,
   >(
-    e: T
+    e: T,
   ) => {
     const { event_data } = e.detail;
     const result = await makeHelixRequest(
-      `/users?login=${e.detail.event_data.user_login}`
+      `/users?login=${e.detail.event_data.user_login}`,
     );
     const { data } = await result.json();
     const [twitchUser] = data;
@@ -95,16 +102,24 @@ export const setupSubAlerts = () => {
       element: $.div(
         fish,
         subscribeText(
-          `${event_data.user_name} just subscribed with tier ${
-            tierMap[event_data.tier as keyof typeof tierMap]
-          }!`
-        )
+          e.detail.event_type === "channel-subscription-gift"
+            ? `${event_data.user_name} just gifted ${event_data.total} tier ${
+                tierMap[event_data.tier as keyof typeof tierMap]
+              } subs!`
+            : `${event_data.user_name} just subscribed with tier ${
+                tierMap[event_data.tier as keyof typeof tierMap]
+              }!`,
+        ),
       ),
       destination: "#app",
       durationMs: 8000,
     });
   };
   $.listen("channel-subscription-message", (e) => {
+    catchSubscriber(e);
+  });
+  $.listen("channel-subscription-gift", (e) => {
+    if (e.detail.event_data.is_anonymous) return;
     catchSubscriber(e);
   });
 
@@ -127,13 +142,6 @@ export const setupSubAlerts = () => {
   //   "his",
   // ];
   // $.listen("channel-subscribe", (e) => {
-  //   if (!e.detail.event_data.is_gift) return;
-  //   if (
-  //     banned.some((word: string) =>
-  //       e.detail.event_data.user_login.toLowerCase().includes(word)
-  //     )
-  //   )
-  //     return;
   //   catchSubscriber(e);
   // });
 };
