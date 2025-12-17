@@ -2,15 +2,12 @@ import "./style.css";
 import { setupChatWebsocket, setupWebsocket } from "./websocket";
 import { setupSubAlerts } from "./alerts/subs";
 import { setupChatAlerts } from "./alerts/chat";
-import { setupShoutoutAlerts } from "./alerts/shoutouts";
 import { setupRaidAlerts } from "./alerts/raids";
 import { setupFollowAlerts } from "./alerts/follows";
 import { setupCheerAlerts } from "./alerts/cheers";
 import { setupFishAlerts } from "./alerts/fish";
-import { setupFollowGoalAlerts, setupSubGoalAlerts } from "./alerts/goal";
 import { setupSpotifyAlerts } from "./alerts/spotify";
 import { setupXkcdAlerts } from "./alerts/xkcd";
-import { setupWheel } from "./alerts/wheel";
 import { setupPngTuber } from "./pngtuber";
 import { setupArena } from "./alerts/arena";
 
@@ -36,10 +33,6 @@ if (window.location.pathname === "/") {
   setupFishAlerts();
   setupSpotifyAlerts();
   setupXkcdAlerts();
-  // setupSubGoalAlerts();
-  // setupFollowGoalAlerts();
-  // setupShoutoutAlerts();
-  // setupWheel();
 } else if (window.location.pathname === "/chat") {
   setupChatWebsocket();
   setupChatAlerts();

@@ -156,12 +156,6 @@ const styles = (...styleObjects: CSSType[]): string => {
   return r;
 };
 
-type MessageBusEvent<K, T> = {
-  message_type: K;
-  source: string;
-  data: T;
-};
-
 export interface FishStats {
   speed: number;
   hp: number;
@@ -223,7 +217,7 @@ type TypeFromKey<Key extends EventKey> = Key extends keyof EventTypeMap
   : Key extends IRCMessageKey
     ? IRCMessage
     : Key extends MessageBusKey
-      ? MessageBusEvent<Key, MessageBusEventType[Key]>
+      ? TauMessage<MessageBusEventType[Key], Key>
       : Key extends OnlineKey
         ? TauMessage<StreamOnlineType[Key], Key>
         : never;
