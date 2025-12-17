@@ -1,9 +1,5 @@
 import "./style.css";
-import {
-  setupChatWebsocket,
-  setupMessageBrokerWebsocket,
-  setupWebsocket,
-} from "./websocket";
+import { setupChatWebsocket, setupWebsocket } from "./websocket";
 import { setupSubAlerts } from "./alerts/subs";
 import { setupChatAlerts } from "./alerts/chat";
 import { setupShoutoutAlerts } from "./alerts/shoutouts";
@@ -17,7 +13,6 @@ import { setupXkcdAlerts } from "./alerts/xkcd";
 import { setupWheel } from "./alerts/wheel";
 import { setupPngTuber } from "./pngtuber";
 import { setupArena } from "./alerts/arena";
-import { setupLicense } from "./alerts/license";
 
 // TODO:
 // something fancy if the goal is met??
@@ -30,28 +25,25 @@ import { setupLicense } from "./alerts/license";
 
 // TODO: refactor this AWFUL router
 if (window.location.pathname === "/") {
-  setupLicense();
   setupWebsocket();
-  setupMessageBrokerWebsocket();
   setupChatWebsocket();
 
   // Alerts
   setupSubAlerts();
-  setupShoutoutAlerts();
   setupRaidAlerts();
   setupFollowAlerts();
   setupCheerAlerts();
   setupFishAlerts();
+  setupSpotifyAlerts();
+  setupXkcdAlerts();
   // setupSubGoalAlerts();
   // setupFollowGoalAlerts();
-  setupSpotifyAlerts();
-  setupWheel();
-  setupXkcdAlerts();
+  // setupShoutoutAlerts();
+  // setupWheel();
 } else if (window.location.pathname === "/chat") {
   setupChatWebsocket();
   setupChatAlerts();
 } else if (window.location.pathname === "/arena") {
-  setupMessageBrokerWebsocket();
   setupArena();
 } else if (window.location.pathname === "/pngtuber") {
   setupPngTuber();

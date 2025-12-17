@@ -46,19 +46,9 @@ export const setupWebsocket = () => {
     "wss://tau.cgs.dev/ws/twitch-events/",
     (e) => {
       const data = JSON.parse(e.data);
-      const event = new CustomEvent(data.event_type, { detail: data });
-      document.dispatchEvent(event);
-    },
-  );
-};
-
-export const setupMessageBrokerWebsocket = () => {
-  makeReconnectingWebsocket(
-    "message-broker",
-    "wss://tau.cgs.dev/ws/message-broker/",
-    (e) => {
-      const data = JSON.parse(e.data);
-      const event = new CustomEvent(data.message_type, { detail: data });
+      const event = new CustomEvent(data.event_type, {
+        detail: data,
+      });
       if (data.source !== "overlay") {
         document.dispatchEvent(event);
       }

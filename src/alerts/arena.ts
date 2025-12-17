@@ -43,7 +43,7 @@ export const setupArena = () => {
   }
 
   $.listen("fish-catch", (e) => {
-    const { data } = e.detail;
+    const { event_data: data } = e.detail;
     const fish = data.fish.toLowerCase();
     const f = fishImg(data.id, fish);
     setTimeout(() => {

@@ -12,7 +12,12 @@ const fishImgUrl = (fish_id: number, fish: string) => {
 };
 
 export const fishImg = (fish_id: number, fish: string) =>
-  $.wattr($.div, { class: "fishfighter" })($.wattr($.img, { src: fishImgUrl(fish_id, fish), class: fish_id < 5000 ? "newfish" : undefined })());
+  $.wattr($.div, { class: "fishfighter" })(
+    $.wattr($.img, {
+      src: fishImgUrl(fish_id, fish),
+      class: fish_id < 5000 ? "newfish" : undefined,
+    })(),
+  );
 
 export const setupFishAlerts = () => {
   const plop = new Audio("/sounds/fish_plop.mp3");
@@ -25,7 +30,7 @@ export const setupFishAlerts = () => {
   nullfish.volume = 0.3;
 
   $.listen("fish-catch", (e) => {
-    const { data } = e.detail;
+    const { event_data: data } = e.detail;
     const fish = data.fish.toLowerCase();
     const classification = data.classification.toLowerCase();
     const f = fishImg(data.id, fish);
@@ -39,7 +44,7 @@ export const setupFishAlerts = () => {
               : classification === "legendary"
                 ? legendary.play()
                 : plop.play(),
-          100
+          100,
         ),
       destination: "#pond",
       durationMs: 3000,
