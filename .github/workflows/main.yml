@@ -26,7 +26,7 @@ jobs:
       
     # Deploy it
     - name: ssh-scp-ssh-pipelines
-      uses: cross-the-world/ssh-scp-ssh-pipelines@78e864b4890087a58248ff39320406971ca88b89
+      uses: yitianyigexiangfa/ssh-scp-ssh-pipelines@c8d97cfac69f032f4f6d3e24ac675f7113f5ab72
       with:
         host: ${{ secrets.DO_SERVER_IP }}
         user: root
