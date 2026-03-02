@@ -22,7 +22,7 @@ jobs:
         node-version: '19.x'
 
     - name: Build
-      run: npm install && npm run build
+      run: npm ci && npm run build
       
     # Deploy it
     - name: ssh-scp-ssh-pipelines
